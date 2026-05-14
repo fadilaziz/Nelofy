@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profil Pengguna — Billing Payment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/profile.css">
+  <link rel="stylesheet" href="../../assets/css/navbar.css">
+  <script defer src="../../assets/javascript/global.js"></script>
+  <script defer src="../../assets/javascript/navbar.js"></script>
+  <script defer src="../../assets/javascript/profile.js"></script>
+  <script defer src="../../assets/javascript/products.js"></script>
+</head>
+
+<body>
+  <!-- ─── TOP ANNOUNCEMENT BAR ─── -->
+  <div id="topbar"></div>
+
+  <!-- ─── NAVBAR ─── -->
+  <nav class="navbar"></nav>
+
+  <main class="container">
+    <div class="page-header" style="display: flex; align-items: center; gap: 16px;">
+      <button id="sidebar-toggle-btn" class="mobile-menu-btn" aria-label="Toggle Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <h2 style="margin: 0;">Profil Saya</h2>
+    </div>
+
+    <div class="profile-layout-grid">
+      <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+      <!-- Sidebar Navigation -->
+      <aside class="profile-sidebar" id="profile-sidebar">
+        <a href="#" class="sidebar-link active" onclick="event.preventDefault(); renderProfile()">Profile</a>
+        <a href="#" class="sidebar-link" onclick="event.preventDefault(); renderKelas()">Kelas Saya</a>
+        <a href="#" class="sidebar-link" onclick="event.preventDefault(); renderRiwayat()">Riwayat Pembelian</a>
+        <a href="#" class="sidebar-link" onclick="event.preventDefault(); renderTransaksi()">Transaksi</a>
+      </aside>
+
+      <!-- Main Profile Box -->
+      <div class="profile-main" id="profile-main">
+        <!--Dinamis-->
+      </div>
+    </div>
+  </main>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal-overlay" id="edit-profile-modal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>Edit Profile</h3>
+        <button class="modal-close-btn" onclick="closeEditProfileModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18" />
+            <path d="M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="edit-profile-form" onsubmit="event.preventDefault(); submitEditProfile();">
+          <div class="form-group">
+            <label for="edit-username">Username</label>
+            <input type="text" id="edit-username" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-email">Email</label>
+            <input type="email" id="edit-email" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-phone">No. Telepon</label>
+            <input type="text" id="edit-phone" class="form-input" required />
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" onclick="closeEditProfileModal()">Batal</button>
+            <button type="submit" class="btn-submit">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div class="modal-overlay" id="change-password-modal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>Permintaan Ganti Password</h3>
+        <button class="modal-close-btn" onclick="closeChangePasswordModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18" />
+            <path d="M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: center; padding: 32px 24px;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+          style="color: var(--black); margin-bottom: 16px;">
+          <path
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        <p style="font-size: 15px; color: var(--gray-700); line-height: 1.5; margin-bottom: 24px;">
+          Ganti password akan dikirim melalui email Anda <strong
+            id="reset-password-email"></strong>.<br><br>Klik tombol <strong>Kirim</strong> untuk melanjutkan.
+        </p>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+          <button class="btn-cancel" style="flex: 1;" onclick="closeChangePasswordModal()">Batal</button>
+          <button class="btn-submit" style="flex: 1;" onclick="submitChangePassword()">Kirim</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+</body>
+
+</html>

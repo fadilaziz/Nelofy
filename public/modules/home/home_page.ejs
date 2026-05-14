@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nelofy — Kuasai Keahlian Digital Masa Depan</title>
+  <meta name="description"
+    content="Platform edukasi nomor 1. Tingkatkan karir Anda dengan materi berkualitas dari praktisi industri terbaik." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <script defer src="../../assets/javascript/script.js"></script>
+  <script>
+    //Set base_url_api
+    localStorage.setItem("base_url_api", "<%= process.env.BASE_API_URL %>");
+  </script>
+  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/home.css">
+  <link rel="stylesheet" href="../../assets/css/navbar.css">
+  <script defer src="../../assets/javascript/global.js"></script>
+  <script defer src="../../assets/javascript/navbar.js"></script>
+  <script defer src="../../assets/javascript/product.js"></script>
+</head>
+
+<body>
+
+  <!-- ─── TOP ANNOUNCEMENT BAR ─── -->
+  <div id="topbar"></div>
+
+  <!-- ─── NAVBAR ─── -->
+  <nav class="navbar"></nav>
+
+  <main class="home-main">
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="hero-badge">🚀 Platform Edukasi No. 1</div>
+        <h1 class="hero-title">Kuasai Keahlian Digital Masa Depan</h1>
+        <p class="hero-desc">Tingkatkan karir Anda dengan materi berkualitas dari praktisi industri terbaik. Belajar
+          fleksibel, sertifikat kredibel.</p>
+        <div class="hero-actions">
+          <a href="/products" class="btn-primary">Mulai Belajar</a>
+          <a href="#features" class="btn-secondary">Pelajari Lebih Lanjut</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-num">50+</span>
+            <span class="stat-label">Modul Premium</span>
+          </div>
+          <div class="stat-break"></div>
+          <div class="stat-item">
+            <span class="stat-num">10K+</span>
+            <span class="stat-label">Siswa Aktif</span>
+          </div>
+          <div class="stat-break"></div>
+          <div class="stat-item">
+            <span class="stat-num">95%</span>
+            <span class="stat-label">Tingkat Karir</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <!-- Abstract Illustration -->
+        <div class="hero-visual-card">
+          <div class="visual-circle"></div>
+          <div class="visual-glass">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+              <path d="M6 12v5c3 3 9 3 12 0v-5" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES / BENEFITS -->
+    <section id="features" class="features-section">
+      <div class="section-header text-center">
+        <h2>Mengapa Memilih Nelofy?</h2>
+        <p>Kami hadir dengan metode pembelajaran yang interaktif dan mudah dipahami untuk membantu Anda mencapai karir
+          impian.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon bg-red">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </div>
+          <h3>Akses Selamanya</h3>
+          <p>Beli sekali, nikmati akses penuh ke semua materi pembelajaran, video, dan panduan tanpa batas waktu.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon bg-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+          </div>
+          <h3>Materi Terupdate</h3>
+          <p>Kurikulum selalu kami perbaharui mengikuti standar industri dan teknologi digital terbaru.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon bg-black">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+          </div>
+          <h3>Sertifikat Kelulusan</h3>
+          <p>Buktikan kompetensi Anda dengan sertifikat resmi yang bisa ditambahkan ke profil profesional Anda.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="cta-box">
+        <h2>Siap Meningkatkan Skil Anda?</h2>
+        <p>Jadilah bagian dari revolusi digital. Bergabung dengan ribuan siswa yang telah mengubah karir mereka bersama
+          Nelofy.</p>
+        <a href="/products" class="btn-primary cta-btn">Lihat Semua Modul</a>
+      </div>
+    </section>
+  </main>
+  <!-- ─── FOOTER ─── -->
+  <footer class="footer">
+    <div class="footer-container">
+
+      <!-- Newsletter Section -->
+      <!-- <div class="footer-newsletter">
+        <div class="newsletter-text">
+          <h3>Bergabung dengan Newsletter</h3>
+          <p>Dapatkan update kelas terbaru dan penawaran spesial langsung di email Anda.</p>
+        </div>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Terima kasih telah berlangganan!');">
+          <input type="email" class="newsletter-input" placeholder="Alamat email Anda" required>
+          <button type="submit" class="newsletter-btn">Berlangganan</button>
+        </form>
+      </div> -->
+
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="/" class="logo">Nelo<span>fy</span></a>
+          <p>Platform pembelajaran online terpercaya untuk mengasah keahlian digital masa depan Anda. Belajar kapan
+            saja, di mana saja.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn" title="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </a>
+            <a href="#" class="social-btn" title="Twitter">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+              </svg>
+            </a>
+            <a href="#" class="social-btn" title="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+              </svg>
+            </a>
+            <a href="#" class="social-btn" title="LinkedIn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Produk</h4>
+          <ul class="footer-links">
+            <li><a href="#">Semua Modul</a></li>
+            <li><a href="#">Kelas Bootcamp</a></li>
+            <li><a href="#">E-Book Gratis</a></li>
+            <li><a href="#">Sertifikasi</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Bantuan</h4>
+          <ul class="footer-links">
+            <li><a href="#">Pusat Bantuan</a></li>
+            <li><a href="#">Cara Pembayaran</a></li>
+            <li><a href="#">Kebijakan Refund</a></li>
+            <li><a href="#">Hubungi Kami</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Tentang</h4>
+          <ul class="footer-links">
+            <li><a href="#">Visi & Misi</a></li>
+            <li><a href="#">Tim Kami</a></li>
+            <li><a href="#">Karir</a></li>
+            <li><a href="#">Syarat & Ketentuan</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nelofy. Seluruh hak cipta dilindungi.</p>
+        <div class="footer-payment-icons">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" height="12" alt="BCA">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/BRI_2020.svg" height="12" alt="BRI">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Bank_Negara_Indonesia_logo_%282004%29.svg"
+            height="12" alt="BNI">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg" height="12" alt="QRIS"
+            class="qris-footer-icon">
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── CART SIDEBAR ─── -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+
+  <aside class="cart-sidebar" id="cart-sidebar" aria-label="Keranjang Belanja">
+    <!-- Header -->
+    <div class="cart-sidebar-header">
+      <div class="cart-sidebar-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1" />
+          <circle cx="20" cy="21" r="1" />
+          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
+        </svg>
+        Keranjang
+      </div>
+      <button class="cart-sidebar-close" id="cart-close-btn" title="Tutup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Item list -->
+    <div class="cart-sidebar-body" id="cart-sidebar-body"></div>
+
+    <!-- Footer -->
+    <div class="cart-sidebar-footer" id="cart-sidebar-footer" style="display:none;">
+      <div class="cart-subtotal">
+        <span class="cart-subtotal-label">Subtotal</span>
+        <span class="cart-subtotal-value" id="cart-subtotal-value">Rp 0</span>
+      </div>
+      <a href="/checkout" class="btn-checkout">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+        Lanjut ke Checkout
+      </a>
+      <button class="btn-clear-cart" id="cart-clear-btn">Kosongkan keranjang</button>
+    </div>
+  </aside>
+
+  <!-- ─── AUTH MODAL ─── -->
+  <div class="auth-overlay" id="auth-overlay">
+    <div class="auth-modal">
+      <button class="auth-close-btn" id="auth-close-btn">&times;</button>
+      
+      <!-- Register Panel -->
+      <div class="auth-panel" id="register-panel">
+        <h2 class="auth-title">Nelo<span>fy</span></h2>
+        <p>Silahkan masukan data untuk membuat akun</p>
+        <div class="auth-form-group">
+          <input type="text" class="auth-input" id="reg-fullname" placeholder="Full Name" required>
+        </div>
+        <div class="auth-form-group">
+          <input type="text" class="auth-input" id="reg-username" placeholder="Username" required>
+        </div>
+        <div class="auth-form-group">
+          <input type="email" class="auth-input" id="reg-email" placeholder="Email" required>
+        </div>
+        <div class="auth-form-group">
+          <input type="password" class="auth-input" id="reg-pass" placeholder="Password" required>
+        </div>
+        <div class="auth-form-group">
+          <input type="tel" class="auth-input" id="reg-phone" placeholder="Phone Number" required>
+        </div>
+        <button class="auth-submit-btn" id="btn-register" onclick="register()">Registrasi</button>
+
+         <div class="auth-divider">atau</div>
+
+        <a class="auth-google-btn" id="btn-google-login" href="https://e042-180-254-113-31.ngrok-free.app/auth/google">
+          <svg viewBox="0 0 48 48" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            <path fill="none" d="M0 0h48v48H0z"/>
+          </svg>
+          Registrasi dengan Google
+        </a>
+        <div class="auth-switch">
+          Sudah punya akun? <a href="#" id="switch-to-login">Masuk disini</a>
+        </div>
+      </div>
+
+      <!-- Login Panel -->
+      <div class="auth-panel" id="login-panel">
+        <h2 class="auth-title">Nelo<span>fy</span></h2>
+        <p>Silahkan masukan email dan password kamu untuk masuk ke akun kamu</p>
+        <div class="auth-form-group">
+          <input type="email" class="auth-input" id="login-email" placeholder="Email" required>
+        </div>
+        <div class="auth-form-group">
+          <input type="password" class="auth-input" id="login-pass" placeholder="Password" required>
+        </div>
+        <button class="auth-submit-btn" id="btn-login" href="#" onclick="login()">Masuk</button>
+
+        <div class="auth-divider">atau</div>
+
+        <a class="auth-google-btn" id="btn-google-login" href="https://6c3f-180-254-113-31.ngrok-free.app/auth/google">
+          <svg viewBox="0 0 48 48" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            <path fill="none" d="M0 0h48v48H0z"/>
+          </svg>
+          Masuk dengan Google
+        </a>
+
+        <div class="auth-switch">
+          Belum punya akun? <a href="#" id="switch-to-register">Daftar sekarang</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── TOAST CONTAINER ─── -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ─── CONFIRM MODAL ─── -->
+  <div class="confirm-overlay" id="confirm-overlay">
+    <div class="confirm-modal">
+      <div class="confirm-title" id="confirm-title">Konfirmasi</div>
+      <div class="confirm-message" id="confirm-message">Apakah Anda yakin?</div>
+      <div class="confirm-actions">
+        <button class="btn-confirm-cancel" id="confirm-cancel-btn">Batal</button>
+        <button class="btn-confirm-ok" id="confirm-ok-btn">Ya, Yakin</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

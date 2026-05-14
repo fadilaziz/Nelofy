@@ -1,0 +1,362 @@
+*, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Shared variables handled by global.css */
+      --green-bg: #dcfce7;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--black);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ══════════════════════════════════════════
+       NAVBAR
+    ══════════════════════════════════════════ */
+    nav.navbar {
+      height: 56px;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      justify-content: space-between;
+    }
+    
+    .profile-chip-wrapper {
+      position: relative;
+    }
+    .nav-profile-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px 3px 3px;
+      border-radius: 99px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      transition: background 0.2s, border-color 0.2s;
+      color: var(--black);
+      cursor: pointer;
+      user-select: none;
+    }
+    .profile-chip-wrapper:hover .nav-profile-chip {
+      border-color: var(--gray-400);
+      background: var(--gray-100);
+    }
+    .nav-profile-avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #111 0%, #444 100%);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.3px;
+      flex-shrink: 0;
+    }
+    .nav-profile-name {
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100px;
+    }
+    .profile-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 210px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: all 0.2s ease;
+      z-index: 300;
+      overflow: hidden;
+      padding: 4px 0;
+    }
+    .profile-chip-wrapper:hover .profile-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .profile-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray-700);
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .profile-dropdown-item:hover { background: var(--gray-100); color: var(--black); }
+    .profile-dropdown-divider { height: 1px; background: var(--gray-200); margin: 4px 0; }
+    
+    .nav-logo span { color: var(--gray-400); }
+
+    /* ══════════════════════════════════════════
+       MAIN — CENTERED LAYOUT
+    ══════════════════════════════════════════ */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+
+    .thankyou-card {
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* ══════════════════════════════════════════
+       SUCCESS ICON
+    ══════════════════════════════════════════ */
+    @keyframes scaleIn {
+      0%   { transform: scale(0.5); opacity: 0; }
+      70%  { transform: scale(1.08); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    @keyframes checkDraw {
+      from { stroke-dashoffset: 60; }
+      to   { stroke-dashoffset: 0; }
+    }
+    @keyframes ringPulse {
+      0%, 100% { transform: scale(1); opacity: 0.15; }
+      50%       { transform: scale(1.18); opacity: 0.06; }
+    }
+
+    .icon-wrap {
+      position: relative;
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 32px;
+      animation: scaleIn 0.5s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    .icon-ring {
+      position: absolute;
+      inset: -14px;
+      border-radius: 50%;
+      background: var(--green-bg);
+      animation: ringPulse 2.4s ease-in-out infinite;
+    }
+    .icon-circle {
+      position: relative;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: var(--green-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .icon-circle svg {
+      width: 44px;
+      height: 44px;
+      stroke: var(--green);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+    .icon-circle svg polyline {
+      stroke-dasharray: 60;
+      stroke-dashoffset: 60;
+      animation: checkDraw 0.5s 0.35s ease forwards;
+    }
+
+    /* ══════════════════════════════════════════
+       TEXT CONTENT
+    ══════════════════════════════════════════ */
+    .thankyou-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: 99px;
+      background: var(--green-bg);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .thankyou-badge svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .thankyou-title {
+      font-size: clamp(26px, 5vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      line-height: 1.1;
+      margin-bottom: 12px;
+      color: var(--black);
+    }
+
+    .thankyou-subtitle {
+      font-size: 15px;
+      color: var(--gray-500);
+      line-height: 1.65;
+      max-width: 380px;
+      margin: 0 auto 36px;
+    }
+
+    /* ══════════════════════════════════════════
+       ORDER SUMMARY BOX
+    ══════════════════════════════════════════ */
+    .summary-box {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 0;
+      font-size: 13.5px;
+    }
+    .summary-row:not(:last-child) {
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .summary-label {
+      color: var(--gray-500);
+      font-weight: 500;
+    }
+    .summary-value {
+      font-weight: 600;
+      color: var(--black);
+      text-align: right;
+    }
+    .summary-value.green {
+      color: var(--green);
+    }
+
+    /* ══════════════════════════════════════════
+       ACTION BUTTONS
+    ══════════════════════════════════════════ */
+    .action-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover {
+      background: #333;
+      transform: translateY(-1px);
+    }
+    .btn-primary svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 13px;
+      background: var(--white);
+      color: var(--black);
+      border: 1.5px solid var(--gray-300);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font);
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--black);
+      background: var(--gray-100);
+    }
+    .btn-secondary svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* ══════════════════════════════════════════
+       FOOTER NOTE
+    ══════════════════════════════════════════ */
+    .footer-note {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--gray-200);
+      font-size: 12px;
+      color: var(--gray-400);
+      line-height: 1.6;
+    }
+    .footer-note a {
+      color: var(--gray-600);
+      text-decoration: underline;
+    }
+    .footer-note a:hover { color: var(--black); }
+
+    /* ══════════════════════════════════════════
+       CONFETTI ANIMATION
+    ══════════════════════════════════════════ */
+    @keyframes confettiFall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+    .confetti-piece {
+      position: fixed;
+      top: -10px;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      animation: confettiFall linear forwards;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 540px) {
+      nav.navbar { padding: 0 16px; }
+      main { padding: 32px 16px; }
+      .thankyou-card { padding: 0; }
+      .summary-box { padding: 16px; }
+    }

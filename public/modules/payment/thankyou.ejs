@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pembayaran Berhasil — Nelofy</title>
+  <meta name="description" content="Terima kasih atas pembelian Anda. Akses kelas Anda sekarang di Nelofy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/css/global.css">
+  <link rel="stylesheet" href="../../assets/css/thankyou.css">
+  <script defer src="../../assets/javascript/global.js"></script>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/" class="nav-logo">Nelo<span>fy</span></a>
+    
+    <div class="profile-chip-wrapper">
+      <div class="nav-profile-chip" id="nav-profile-chip">
+        <div class="nav-profile-avatar" id="navbar-profile-avatar"></div>
+        <span class="nav-profile-name" id="navbar-profile-name"></span>
+      </div>
+      <div class="profile-dropdown">
+          <div class="profile-dropdown-item" id="theme-toggle-btn" style="cursor: pointer; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <svg id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              <svg id="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              Dark Mode
+            </div>
+            <div class="theme-switch-track" style="width: 32px; height: 18px; background: var(--gray-300); border-radius: 99px; position: relative; transition: background 0.3s;">
+               <div class="theme-switch-handle" style="width: 14px; height: 14px; background: var(--white); border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: transform 0.3s;"></div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div class="thankyou-card">
+
+      <!-- Success Icon -->
+      <div class="icon-wrap">
+        <div class="icon-ring"></div>
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Badge -->
+      <div class="thankyou-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Pembayaran Berhasil
+      </div>
+
+      <!-- Title & Subtitle -->
+      <h1 class="thankyou-title">Terima Kasih!</h1>
+      <p class="thankyou-subtitle">
+        Pembayaran Anda telah dikonfirmasi. Kelas Anda sudah aktif dan siap untuk diakses kapan saja.
+      </p>
+
+      <!-- Order Summary -->
+      <div class="summary-box">
+        <div class="summary-row">
+          <span class="summary-label">No. Invoice</span>
+          <span class="summary-value" id="ty-invoice">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Order ID</span>
+          <span class="summary-value" id="ty-order-id">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Tanggal</span>
+          <span class="summary-value" id="ty-date">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Status</span>
+          <span class="summary-value green">✓ Lunas</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-group">
+        <a href="/profile?tab=kelas" class="btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+          </svg>
+          Lihat Kelas Saya
+        </a>
+        <a href="/products" class="btn-secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+          Jelajahi Kelas Lainnya
+        </a>
+      </div>
+
+      <!-- Footer Note -->
+      <div class="footer-note">
+        Bukti pembayaran telah dikirim ke email Anda.<br>
+        Ada pertanyaan? <a href="#">Hubungi kami</a> atau kunjungi <a href="#">pusat bantuan</a>.
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>
