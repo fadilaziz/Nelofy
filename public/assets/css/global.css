@@ -1,6 +1,6 @@
 :root {
-  --black:    #111111;
-  --white:    #ffffff;
+  --black: #111111;
+  --white: #ffffff;
   --gray-100: #f5f5f5;
   --gray-200: #dbdbdb;
   --gray-300: #c9c9c9;
@@ -8,16 +8,16 @@
   --gray-500: #737373;
   --gray-600: #525252;
   --gray-700: #404040;
-  --red:      #e11d48;
-  --green:    #16a34a;
-  --font:     'Inter', sans-serif;
-  --radius:   4px;
+  --red: #e11d48;
+  --green: #16a34a;
+  --font: 'Inter', sans-serif;
+  --radius: 4px;
   --transition: 0.2s ease;
 }
 
 [data-theme="dark"] {
-  --black:    #ffffff;
-  --white:    #111111;
+  --black: #ffffff;
+  --white: #111111;
   --gray-100: #1a1a1a;
   --gray-200: #2a2a2a;
   --gray-300: #3a3a3a;

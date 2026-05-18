@@ -9,12 +9,14 @@
 :root {
   /* Shared variables handled by global.css */
 }
+
 body {
   font-family: var(--font);
   background: #fafafa;
   color: var(--black);
   min-height: 100vh;
 }
+
 nav.navbar {
   height: 56px;
   background: var(--white);
@@ -32,6 +34,7 @@ nav.navbar {
 .profile-chip-wrapper {
   position: relative;
 }
+
 .nav-profile-chip {
   display: flex;
   align-items: center;
@@ -45,10 +48,12 @@ nav.navbar {
   cursor: pointer;
   user-select: none;
 }
+
 .profile-chip-wrapper:hover .nav-profile-chip {
   border-color: var(--gray-400);
   background: var(--gray-100);
 }
+
 .nav-profile-avatar {
   width: 22px;
   height: 22px;
@@ -63,6 +68,7 @@ nav.navbar {
   letter-spacing: 0.3px;
   flex-shrink: 0;
 }
+
 .nav-profile-name {
   font-size: 12px;
   font-weight: 600;
@@ -71,6 +77,7 @@ nav.navbar {
   text-overflow: ellipsis;
   max-width: 100px;
 }
+
 .profile-dropdown {
   position: absolute;
   top: calc(100% + 8px);
@@ -79,7 +86,7 @@ nav.navbar {
   background: var(--white);
   border: 1px solid var(--gray-200);
   border-radius: 10px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   opacity: 0;
   visibility: hidden;
   transform: translateY(-6px);
@@ -88,11 +95,13 @@ nav.navbar {
   overflow: hidden;
   padding: 4px 0;
 }
+
 .profile-chip-wrapper:hover .profile-dropdown {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
+
 .profile-dropdown-item {
   display: flex;
   align-items: center;
@@ -104,8 +113,18 @@ nav.navbar {
   text-decoration: none;
   transition: background 0.15s;
 }
-.profile-dropdown-item:hover { background: var(--gray-100); color: var(--black); }
-.profile-dropdown-divider { height: 1px; background: var(--gray-200); margin: 4px 0; }
+
+.profile-dropdown-item:hover {
+  background: var(--gray-100);
+  color: var(--black);
+}
+
+.profile-dropdown-divider {
+  height: 1px;
+  background: var(--gray-200);
+  margin: 4px 0;
+}
+
 .nav-logo {
   font-size: 20px;
   font-weight: 800;
@@ -113,32 +132,39 @@ nav.navbar {
   color: var(--black);
   text-decoration: none;
 }
+
 .nav-logo span {
   color: var(--gray-400);
 }
+
 .container {
   max-width: 1100px;
   margin: 0 auto;
   padding: 40px 32px;
 }
+
 .checkout-header {
   margin-bottom: 32px;
 }
+
 .checkout-header h1 {
   font-size: 28px;
   font-weight: 800;
   letter-spacing: -0.5px;
 }
+
 .checkout-grid {
   display: grid;
   grid-template-columns: 1fr 380px;
   gap: 32px;
 }
+
 @media (max-width: 900px) {
   .checkout-grid {
     grid-template-columns: 1fr;
   }
 }
+
 .panel {
   background: var(--white);
   border: 1px solid var(--gray-200);
@@ -146,6 +172,7 @@ nav.navbar {
   padding: 24px;
   margin-bottom: 20px;
 }
+
 .panel-title {
   font-size: 18px;
   font-weight: 700;
@@ -153,14 +180,17 @@ nav.navbar {
   padding-bottom: 12px;
   border-bottom: 1px solid var(--gray-100);
 }
+
 .customer-info {
   font-size: 14px;
   line-height: 1.6;
   color: var(--gray-700);
 }
+
 .customer-info strong {
   color: var(--black);
 }
+
 /* Payment Accordions inline */
 .payment-group {
   border-bottom: 1px solid var(--gray-200);
@@ -171,6 +201,7 @@ nav.navbar {
   background: var(--white);
   transition: border-color 0.2s;
 }
+
 .payment-group-header {
   padding: 16px;
   font-weight: 600;
@@ -182,31 +213,39 @@ nav.navbar {
   background: var(--white);
   transition: background 0.2s;
 }
+
 .payment-group-header:hover {
   background: var(--gray-100);
 }
+
 .payment-group-header svg {
   transition: transform 0.3s;
 }
+
 .payment-group.active {
   border-color: var(--black);
 }
+
 .payment-group.active .payment-group-header svg {
   transform: rotate(180deg);
 }
+
 .payment-group-content {
   display: none;
   padding: 0 16px 16px;
   background: var(--white);
 }
+
 .payment-group.active .payment-group-content {
   display: block;
 }
+
 .bank-list {
   display: grid;
   gap: 10px;
   margin-top: 12px;
 }
+
 .bank-item {
   border: 1px solid var(--gray-300);
   border-radius: 8px;
@@ -218,23 +257,28 @@ nav.navbar {
   background: var(--white);
   transition: border-color 0.2s;
 }
+
 .bank-item:hover {
   border-color: var(--black);
 }
+
 .bank-item.selected {
   border-color: var(--black);
   background: #fdfdfd;
 }
+
 .bank-name {
   font-weight: 600;
   font-size: 14px;
   flex: 1;
 }
+
 .bank-logo {
   height: 20px;
   max-width: 60px;
   object-fit: contain;
 }
+
 /* Summary Block */
 .summary-items {
   display: flex;
@@ -244,10 +288,12 @@ nav.navbar {
   max-height: 400px;
   overflow-y: auto;
 }
+
 .summary-item {
   display: flex;
   gap: 12px;
 }
+
 .summary-item-img {
   width: 50px;
   height: 36px;
@@ -255,10 +301,12 @@ nav.navbar {
   object-fit: cover;
   background: var(--gray-100);
 }
+
 .summary-item-details {
   flex: 1;
   min-width: 0;
 }
+
 .summary-item-name {
   font-size: 13px;
   font-weight: 600;
@@ -267,10 +315,12 @@ nav.navbar {
   text-overflow: ellipsis;
   margin-bottom: 2px;
 }
+
 .summary-item-price {
   font-size: 12px;
   color: var(--gray-600);
 }
+
 .voucher-section {
   display: flex;
   gap: 8px;
@@ -278,6 +328,7 @@ nav.navbar {
   padding-bottom: 24px;
   border-bottom: 1px solid var(--gray-100);
 }
+
 .voucher-input {
   flex: 1;
   padding: 10px;
@@ -287,9 +338,11 @@ nav.navbar {
   font-family: var(--font);
   outline: none;
 }
+
 .voucher-input:focus {
   border-color: var(--black);
 }
+
 .btn-apply-voucher {
   padding: 0 16px;
   background: var(--black);
@@ -302,10 +355,12 @@ nav.navbar {
   font-family: var(--font);
   transition: background var(--transition);
 }
+
 .btn-apply-voucher:hover {
   background: var(--gray-100);
   color: var(--black);
 }
+
 .totals-row {
   display: flex;
   justify-content: space-between;
@@ -313,13 +368,16 @@ nav.navbar {
   margin-bottom: 12px;
   color: var(--gray-600);
 }
+
 .totals-row.discount-row {
   color: var(--green);
   display: none;
 }
+
 .totals-row.discount-row.show {
   display: flex;
 }
+
 .totals-row.grand-total {
   font-size: 18px;
   font-weight: 800;
@@ -328,6 +386,7 @@ nav.navbar {
   padding-top: 16px;
   border-top: 1px solid var(--gray-200);
 }
+
 .btn-checkout {
   display: block;
   width: 100%;
@@ -344,16 +403,19 @@ nav.navbar {
   margin-top: 24px;
   transition: background var(--transition), transform 0.1s ease;
 }
+
 .btn-checkout:hover {
   background: #333;
   transform: translateY(-1px);
 }
+
 .btn-checkout:disabled {
   background: var(--gray-300);
   color: var(--gray-500);
   cursor: not-allowed;
   transform: none;
 }
+
 /* Toast */
 .toast-container {
   position: fixed;
@@ -366,6 +428,7 @@ nav.navbar {
   z-index: 9999;
   pointer-events: none;
 }
+
 .toast {
   background: var(--black);
   color: var(--white);
@@ -380,20 +443,23 @@ nav.navbar {
   opacity: 0;
   transition: transform 0.4s ease, opacity 0.4s ease;
 }
+
 .toast.show {
   transform: translateY(0);
   opacity: 1;
 }
+
 .toast.error {
   background: var(--red);
 }
+
 /* ══════════════════════════════════════════
    AUTH MODAL
 ══════════════════════════════════════════ */
 .auth-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 300;
   opacity: 0;
   visibility: hidden;
@@ -402,10 +468,12 @@ nav.navbar {
   align-items: center;
   justify-content: center;
 }
+
 .auth-overlay.open {
   opacity: 1;
   visibility: visible;
 }
+
 .auth-modal {
   background: var(--white);
   width: 400px;
@@ -413,9 +481,11 @@ nav.navbar {
   border-radius: 12px;
   position: relative;
 }
+
 .auth-overlay.open .auth-modal {
   transform: translateY(0);
 }
+
 .auth-close-btn {
   position: absolute;
   top: 16px;
@@ -428,16 +498,22 @@ nav.navbar {
   line-height: 1;
   transition: color 0.2s;
 }
-.auth-close-btn:hover { color: var(--black); }
+
+.auth-close-btn:hover {
+  color: var(--black);
+}
+
 .auth-title {
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 20px;
   text-align: center;
 }
+
 .auth-form-group {
   margin-bottom: 16px;
 }
+
 .auth-input {
   width: 100%;
   padding: 10px 14px;
@@ -448,9 +524,11 @@ nav.navbar {
   outline: none;
   transition: border-color 0.2s;
 }
+
 .auth-input:focus {
   border-color: var(--black);
 }
+
 .auth-submit-btn {
   width: 100%;
   padding: 12px;
@@ -465,19 +543,28 @@ nav.navbar {
   transition: background 0.2s;
   margin-top: 8px;
 }
-.auth-submit-btn:hover { background: #333; }
-.auth-submit-btn:active { transform: scale(0.98); }
+
+.auth-submit-btn:hover {
+  background: #333;
+}
+
+.auth-submit-btn:active {
+  transform: scale(0.98);
+}
+
 .auth-switch {
   margin-top: 20px;
   text-align: center;
   font-size: 13px;
   color: var(--gray-500);
 }
+
 .auth-switch a {
   color: var(--black);
   font-weight: 600;
   text-decoration: underline;
 }
+
 /* ── Customer Info Card ── */
 .customer-info-box {
   display: flex;
@@ -488,6 +575,7 @@ nav.navbar {
   border-radius: 10px;
   border: 1px solid var(--gray-200);
 }
+
 .customer-avatar {
   width: 48px;
   height: 48px;
@@ -501,12 +589,14 @@ nav.navbar {
   font-size: 18px;
   letter-spacing: 0.5px;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
+
 .customer-info-details {
   flex: 1;
   min-width: 0;
 }
+
 .customer-info-name {
   font-size: 15px;
   font-weight: 700;
@@ -516,6 +606,7 @@ nav.navbar {
   align-items: center;
   gap: 6px;
 }
+
 .customer-info-name .verified-icon {
   display: inline-flex;
   align-items: center;
@@ -526,6 +617,7 @@ nav.navbar {
   border-radius: 50%;
   flex-shrink: 0;
 }
+
 .customer-info-name .verified-icon svg {
   width: 10px;
   height: 10px;
@@ -533,6 +625,7 @@ nav.navbar {
   stroke-width: 3;
   fill: none;
 }
+
 .customer-info-row {
   display: flex;
   align-items: center;
@@ -541,20 +634,24 @@ nav.navbar {
   color: var(--gray-500);
   margin-top: 2px;
 }
+
 .customer-info-row svg {
   width: 14px;
   height: 14px;
   stroke: var(--gray-400);
   flex-shrink: 0;
 }
+
 /* ── Inline Auth Panel ── */
 .auth-panel-inline {
   padding: 4px 0 0;
 }
+
 .auth-panel-inline .auth-header-illust {
   text-align: center;
   margin-bottom: 16px;
 }
+
 .auth-panel-inline .auth-header-illust .lock-icon {
   display: inline-flex;
   align-items: center;
@@ -565,24 +662,29 @@ nav.navbar {
   background: var(--gray-100);
   margin-bottom: 10px;
 }
+
 .auth-panel-inline .auth-header-illust .lock-icon svg {
   width: 22px;
   height: 22px;
   stroke: var(--gray-500);
 }
+
 .auth-panel-inline .auth-header-illust h3 {
   font-size: 17px;
   font-weight: 700;
   margin-bottom: 4px;
 }
+
 .auth-panel-inline .auth-header-illust p {
   font-size: 13px;
   color: var(--gray-500);
 }
+
 .auth-input-wrap {
   position: relative;
   margin-bottom: 14px;
 }
+
 .auth-input-wrap .input-icon {
   position: absolute;
   left: 12px;
@@ -590,20 +692,24 @@ nav.navbar {
   transform: translateY(-50%);
   pointer-events: none;
 }
+
 .auth-input-wrap .input-icon svg {
   width: 16px;
   height: 16px;
   stroke: var(--gray-400);
 }
+
 .auth-input-wrap .auth-input {
   padding-left: 38px;
 }
+
 /* ══════════════════════════════════════════
    UPSELL / RECOMMENDED PRODUCTS
 ══════════════════════════════════════════ */
 .upsell-section {
   margin-top: 8px;
 }
+
 .upsell-header {
   display: flex;
   align-items: center;
@@ -612,6 +718,7 @@ nav.navbar {
   padding-bottom: 14px;
   border-bottom: 1px solid var(--gray-100);
 }
+
 .upsell-badge {
   display: inline-flex;
   align-items: center;
@@ -626,33 +733,39 @@ nav.navbar {
   border-radius: 99px;
   flex-shrink: 0;
 }
+
 .upsell-badge svg {
   width: 10px;
   height: 10px;
   fill: #facc15;
   stroke: none;
 }
+
 .upsell-title {
   font-size: 15px;
   font-weight: 700;
   color: var(--black);
   flex: 1;
 }
+
 .upsell-subtitle {
   font-size: 12px;
   color: var(--gray-500);
   margin-bottom: 16px;
 }
+
 .upsell-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
+
 @media (max-width: 600px) {
   .upsell-grid {
     grid-template-columns: 1fr;
   }
 }
+
 /* Product card — identical to products page */
 .upsell-section .product-card {
   display: flex;
@@ -666,17 +779,20 @@ nav.navbar {
   color: var(--black);
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
+
 .upsell-section .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.10);
   border-color: var(--gray-300);
 }
+
 .upsell-section .card-img-wrap {
   background: var(--gray-100);
   aspect-ratio: 4 / 3;
   overflow: hidden;
   position: relative;
 }
+
 .upsell-section .card-img-wrap img {
   width: 100%;
   height: 100%;
@@ -684,7 +800,11 @@ nav.navbar {
   transition: transform 0.4s ease;
   display: block;
 }
-.upsell-section .product-card:hover .card-img-wrap img { transform: scale(1.07); }
+
+.upsell-section .product-card:hover .card-img-wrap img {
+  transform: scale(1.07);
+}
+
 .upsell-section .card-img-placeholder {
   width: 100%;
   height: 100%;
@@ -694,11 +814,13 @@ nav.navbar {
   background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
   color: var(--gray-400);
 }
+
 .upsell-section .card-img-placeholder svg {
   width: 48px;
   height: 48px;
   opacity: 0.5;
 }
+
 .upsell-section .card-body {
   padding: 12px 12px 12px;
   flex: 1;
@@ -706,6 +828,7 @@ nav.navbar {
   flex-direction: column;
   gap: 2px;
 }
+
 .upsell-section .card-name {
   font-size: 15px;
   font-weight: 700;
@@ -716,6 +839,7 @@ nav.navbar {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
 .upsell-section .card-subtitle {
   font-size: 11.5px;
   color: var(--gray-500);
@@ -725,26 +849,31 @@ nav.navbar {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
 .upsell-section .card-color {
   font-size: 11px;
   color: var(--gray-400);
   margin-top: 2px;
 }
+
 .upsell-section .card-price-row {
   display: flex;
   align-items: baseline;
   gap: 5px;
   margin-top: 6px;
 }
+
 .upsell-section .card-price {
   font-size: 17px;
   font-weight: 700;
 }
+
 .upsell-section .card-actions {
   display: flex;
   gap: 7px;
   margin-top: 10px;
 }
+
 .upsell-section .btn-beli {
   flex: 1;
   padding: 7px 0;
@@ -764,14 +893,25 @@ nav.navbar {
   gap: 5px;
   transition: background 0.2s ease, transform 0.15s ease;
 }
-.upsell-section .btn-beli:hover { background: #333; transform: scale(1.02); }
-.upsell-section .btn-beli svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+.upsell-section .btn-beli:hover {
+  background: #333;
+  transform: scale(1.02);
+}
+
+.upsell-section .btn-beli svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
 .upsell-section .btn-beli.in-cart {
   background: var(--gray-200);
   color: var(--gray-600);
   cursor: default;
   transform: none;
 }
+
 .upsell-section .btn-keranjang {
   width: 34px;
   height: 34px;
@@ -786,52 +926,336 @@ nav.navbar {
   justify-content: center;
   transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
 }
+
 .upsell-section .btn-keranjang:hover {
   border-color: var(--black);
   background: var(--gray-100);
   transform: scale(1.06);
 }
-.upsell-section .btn-keranjang svg { width: 15px; height: 15px; }
+
+.upsell-section .btn-keranjang svg {
+  width: 15px;
+  height: 15px;
+}
+
 .upsell-skeleton {
   background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.4s infinite;
   border-radius: 6px;
 }
+
 @keyframes skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
+
 .upsell-loading-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
+
 .upsell-skeleton-card {
   border: 1px solid var(--gray-200);
   border-radius: 10px;
   overflow: hidden;
 }
+
 .upsell-skeleton-img {
   aspect-ratio: 4 / 3;
 }
+
 .upsell-skeleton-body {
   padding: 12px;
 }
+
 .upsell-skeleton-line {
   height: 10px;
   margin-bottom: 8px;
   border-radius: 4px;
 }
 
-@media (max-width: 540px) {
-  .container {
-    padding: 20px 16px;
+/* ══════════════════════════════════════════
+   RESPONSIVE — TABLET (≤ 768px)
+══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  nav.navbar {
+    padding: 0 16px;
+    height: 52px;
   }
+
+  .nav-logo {
+    font-size: 18px;
+  }
+
+  .container {
+    padding: 28px 20px;
+  }
+
   .checkout-header h1 {
     font-size: 24px;
   }
+
+  .checkout-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .checkout-right .panel {
+    position: static !important;
+  }
+
   .panel {
     padding: 20px 16px;
+  }
+
+  .upsell-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .upsell-loading-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤ 540px)
+══════════════════════════════════════════ */
+@media (max-width: 540px) {
+  nav.navbar {
+    padding: 0 12px;
+    height: 50px;
+  }
+
+  .nav-logo {
+    font-size: 17px;
+  }
+
+  .nav-profile-name {
+    display: none;
+  }
+
+  .nav-profile-chip {
+    padding: 3px;
+  }
+
+  .container {
+    padding: 16px 12px;
+  }
+
+  .checkout-header {
+    margin-bottom: 20px;
+  }
+
+  .checkout-header h1 {
+    font-size: 22px;
+  }
+
+  .checkout-grid {
+    gap: 16px;
+  }
+
+  .panel {
+    padding: 16px 14px;
+    margin-bottom: 14px;
+    border-radius: 10px;
+  }
+
+  .panel-title {
+    font-size: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+  }
+
+  /* Customer Info */
+  .customer-info-box {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .customer-avatar {
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+  }
+
+  .customer-info-name {
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .customer-info-row {
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  /* Payment Methods */
+  .payment-group-header {
+    padding: 14px 12px;
+    font-size: 13px;
+  }
+
+  .payment-group-content {
+    padding: 0 12px 12px;
+  }
+
+  .bank-item {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .bank-name {
+    font-size: 13px;
+  }
+
+  .bank-logo {
+    height: 18px;
+    max-width: 50px;
+  }
+
+  /* Summary */
+  .summary-item-name {
+    font-size: 12px;
+  }
+
+  .summary-item-price {
+    font-size: 11px;
+  }
+
+  .voucher-section {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+
+  .voucher-input {
+    width: 100%;
+  }
+
+  .btn-apply-voucher {
+    width: 100%;
+    padding: 10px 16px;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .totals-row {
+    font-size: 12px;
+  }
+
+  .totals-row.grand-total {
+    font-size: 16px;
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+
+  .btn-checkout {
+    padding: 12px;
+    font-size: 13px;
+    margin-top: 16px;
+  }
+
+  /* Auth Inline */
+  .auth-panel-inline .auth-header-illust h3 {
+    font-size: 15px;
+  }
+
+  .auth-panel-inline .auth-header-illust p {
+    font-size: 12px;
+  }
+
+  /* Upsell */
+  .upsell-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .upsell-loading-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .upsell-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+
+  .upsell-title {
+    font-size: 14px;
+  }
+
+  .upsell-subtitle {
+    font-size: 11px;
+    margin-bottom: 12px;
+  }
+
+  .upsell-section .card-name {
+    font-size: 13px;
+  }
+
+  .upsell-section .card-price {
+    font-size: 15px;
+  }
+
+  .upsell-section .card-body {
+    padding: 10px;
+  }
+
+  /* Auth Modal */
+  .auth-modal {
+    width: 95vw;
+    max-width: 95vw;
+  }
+
+  .auth-title {
+    font-size: 18px;
+  }
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE (≤ 380px)
+══════════════════════════════════════════ */
+@media (max-width: 380px) {
+  .container {
+    padding: 12px 8px;
+  }
+
+  .panel {
+    padding: 14px 12px;
+    border-radius: 8px;
+  }
+
+  .checkout-header h1 {
+    font-size: 20px;
+  }
+
+  .bank-item {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .bank-name {
+    font-size: 12px;
+  }
+
+  .totals-row.grand-total {
+    font-size: 15px;
   }
 }

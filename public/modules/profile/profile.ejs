@@ -34,7 +34,6 @@
           <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
       </button>
-      <h2 style="margin: 0;">Profil Saya</h2>
     </div>
 
     <div class="profile-layout-grid">
@@ -43,14 +42,40 @@
       <!-- Sidebar Navigation -->
       <aside class="profile-sidebar" id="profile-sidebar">
         <a href="#" class="sidebar-link active" onclick="event.preventDefault(); renderProfile()">Profile</a>
-        <a href="#" class="sidebar-link" onclick="event.preventDefault(); renderKelas()">Kelas Saya</a>
         <a href="#" class="sidebar-link" onclick="event.preventDefault(); renderRiwayat()">Riwayat Pembelian</a>
-        <a href="#" class="sidebar-link" onclick="event.preventDefault(); renderTransaksi()">Transaksi</a>
+        <a href="#" class="sidebar-link" onclick="event.preventDefault(); renderTransaksi()">Pesanan Saya</a>
       </aside>
 
       <!-- Main Profile Box -->
       <div class="profile-main" id="profile-main">
-        <!--Dinamis-->
+        <div class="profile-card fade-in-up" id="profile-container" style="padding: 32px;">
+          <div class="profile-header" style="display: flex; align-items: center; gap: 20px; margin-bottom: 32px;">
+            <div class="skeleton-pulse skeleton-avatar"></div>
+            <div style="flex: 1;">
+              <div class="skeleton-pulse skeleton-title"></div>
+              <div class="skeleton-pulse skeleton-text"></div>
+            </div>
+          </div>
+          <div class="profile-body">
+            <div class="data-group">
+              <div class="skeleton-pulse" style="height: 18px; width: 150px; margin-bottom: 16px; border-radius: 4px;"></div>
+              <div class="data-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;">
+                <div class="data-item">
+                  <div class="skeleton-pulse skeleton-label"></div>
+                  <div class="skeleton-pulse skeleton-value"></div>
+                </div>
+                <div class="data-item">
+                  <div class="skeleton-pulse skeleton-label"></div>
+                  <div class="skeleton-pulse skeleton-value"></div>
+                </div>
+                <div class="data-item">
+                  <div class="skeleton-pulse skeleton-label"></div>
+                  <div class="skeleton-pulse skeleton-value"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -116,6 +141,24 @@
           <button class="btn-cancel" style="flex: 1;" onclick="closeChangePasswordModal()">Batal</button>
           <button class="btn-submit" style="flex: 1;" onclick="submitChangePassword()">Kirim</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail Transaksi Modal -->
+  <div class="modal-overlay" id="detail-transaksi-modal">
+    <div class="modal-container" style="max-width: 600px; width: 90%;">
+      <div class="modal-header">
+        <h3>Detail Transaksi</h3>
+        <button class="modal-close-btn" onclick="closeDetailTransaksiModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18" />
+            <path d="M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" id="detail-transaksi-body" style="padding: 24px;">
+        <!-- Akan diisi secara dinamis oleh JavaScript -->
       </div>
     </div>
   </div>

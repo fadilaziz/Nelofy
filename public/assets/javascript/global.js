@@ -2,6 +2,8 @@
 function applyTheme(theme) {
   const sunIcon = document.getElementById('theme-icon-sun');
   const moonIcon = document.getElementById('theme-icon-moon');
+  const sunIconLo = document.getElementById('theme-icon-sun-lo');
+  const moonIconLo = document.getElementById('theme-icon-moon-lo');
   const themeSwitchHandle = document.querySelector('.theme-switch-handle');
   const themeSwitchTrack = document.querySelector('.theme-switch-track');
 
@@ -9,12 +11,16 @@ function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', 'dark');
     if (sunIcon) sunIcon.style.display = 'none';
     if (moonIcon) moonIcon.style.display = 'block';
+    if (sunIconLo) sunIconLo.style.display = 'none';
+    if (moonIconLo) moonIconLo.style.display = 'block';
     if (themeSwitchHandle) themeSwitchHandle.style.transform = 'translateX(14px)';
     if (themeSwitchTrack) themeSwitchTrack.style.background = 'var(--green)';
   } else {
     document.documentElement.removeAttribute('data-theme');
     if (sunIcon) sunIcon.style.display = 'block';
     if (moonIcon) moonIcon.style.display = 'none';
+    if (sunIconLo) sunIconLo.style.display = 'block';
+    if (moonIconLo) moonIconLo.style.display = 'none';
     if (themeSwitchHandle) themeSwitchHandle.style.transform = 'translateX(0)';
     if (themeSwitchTrack) themeSwitchTrack.style.background = 'var(--gray-300)';
   }
@@ -35,6 +41,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   if (themeToggleBtn) {
     themeToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', newTheme);
+      applyTheme(newTheme);
+    });
+  }
+
+  const themeToggleLo = document.getElementById('theme-toggle-loggedout');
+  if (themeToggleLo) {
+    themeToggleLo.addEventListener('click', (e) => {
       e.stopPropagation();
       const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -64,6 +81,33 @@ function register() {
         btnRegister.disabled = false;
         return;
     }
+
+    //validasi password
+    if (password.length < 8) {
+        showNotification("Password harus minimal 8 karakter", 'error');
+        btnRegister.innerHTML = "Registrasi";
+        btnRegister.disabled = false;
+        return;
+    }
+
+    //Validasi Email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showNotification("Email tidak valid", 'error');
+        btnRegister.innerHTML = "Registrasi";
+        btnRegister.disabled = false;
+        return;
+    }
+
+    //Validasi Phone
+    const phoneRegex = /^[0-9]{8,}$/;
+    if (!phoneRegex.test(phone)) {
+        showNotification("Nomor telepon tidak valid", 'error');
+        btnRegister.innerHTML = "Registrasi";
+        btnRegister.disabled = false;
+        return;
+    }
+
     //Capture payload
     const data = {
         full_name: fullname,
@@ -190,6 +234,7 @@ function updateUI(userData) {
     const profileChip = document.getElementById("nav-profile-chip");
     const profileAvatar = document.getElementById("nav-profile-avatar");
     const profileName = document.getElementById("nav-profile-name");
+    const themeToggleLo = document.getElementById("theme-toggle-loggedout");
 
     if (registerBar) registerBar.style.display = "none";
     if (userData) {
@@ -203,6 +248,9 @@ function updateUI(userData) {
 
         // Hide masuk button, show profile chip
         if (loginBar) loginBar.style.display = "none";
+
+        // Hide logged-out theme toggle
+        if (themeToggleLo) themeToggleLo.style.display = "none";
 
         // Show profile chip wrapper + chip with avatar + username
         if (profileChipWrapper) profileChipWrapper.style.display = "";
@@ -220,6 +268,9 @@ function updateUI(userData) {
             loginBar.style.pointerEvents = "auto";
         }
         if (registerBar) registerBar.style.display = "";
+
+        // Show logged-out theme toggle
+        if (themeToggleLo) themeToggleLo.style.display = "inline-flex";
 
         // Hide profile chip wrapper
         if (profileChipWrapper) profileChipWrapper.style.display = "none";

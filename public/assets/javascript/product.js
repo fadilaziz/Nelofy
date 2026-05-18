@@ -5,6 +5,10 @@
 //Ambil baseURL
 const CART_KEY = "bp_cart";
 
+// ── Global product cache (diisi setelah fetch) ──
+let allProducts = [];
+
+
 function getCart() {
     return JSON.parse(localStorage.getItem(CART_KEY) || "[]");
 }
@@ -345,71 +349,180 @@ function get_products() {
     })
         .then(response => response.json())
         .then(data => {
-            const FALLBACK_THUMB = "";
-            const container = document.getElementById("product-container");
-            container.innerHTML = "";
-            const produk = data.data
-            const productLength = document.getElementById("total-product")
-            productLength.innerHTML = produk.length + " Produk Tersedia";
-
-
-            data.data.forEach((product, index) => {
-                const card = document.createElement("div");
-                card.className = "product-card";
-                card.style.setProperty("--i", index);
-
-                const thumb = product.image || FALLBACK_THUMB;
-
-                card.innerHTML = `
-                    <div class="card-img-wrap">
-                        <img src="${thumb}" alt="${product.product_name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="card-img-placeholder" style="display: none;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-name">${product.product_name}</div>
-                        <div class="card-subtitle">${product.description || ''}</div>
-                        <div class="card-color">${product.type}</div>
-                        <div class="card-price-row">
-                            <span class="card-price">Rp ${Number(product.price).toLocaleString('id-ID')}</span>
-                        </div>
-                        <div class="card-actions">
-                            <a href="/products/${product.id}" class="btn-beli">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                <span>Beli</span>
-                            </a>
-                            <button class="btn-keranjang" title="Tambah ke keranjang">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                `;
-
-                // Pasang event listener SETELAH card masuk DOM
-                const btnCart = card.querySelector(".btn-keranjang");
-                btnCart.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    addToCart(product);
-                });
-
-                // Pasang event listener SETELAH card masuk DOM
-                const btnBeli = card.querySelector(".btn-beli");
-                btnBeli.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    addToCart(product);
-                    // openCartSidebar();
-                });
-
-                container.appendChild(card);
-            });
-
+            allProducts = data.data || [];
+            applyFilters();
             updateCartBadge();
         })
         .catch(error => console.error('Gagal mengambil produk:', error));
 }
+
+// ══════════════════════════════════════════
+//  RENDER CARDS
+// ══════════════════════════════════════════
+function renderProducts(products) {
+    const container = document.getElementById('product-container');
+    container.innerHTML = '';
+
+    const productLength = document.getElementById('total-product');
+
+    if (products.length === 0) {
+        container.innerHTML = `
+            <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--gray-400);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48" style="margin-bottom:12px;opacity:.4;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <div style="font-size:15px;font-weight:600;margin-bottom:4px;">Produk tidak ditemukan</div>
+                <div style="font-size:13px;">Coba ubah kata kunci atau filter pencarian</div>
+            </div>
+        `;
+        if (productLength) productLength.innerHTML = '0 Produk Tersedia';
+        return;
+    }
+
+    products.forEach((product, index) => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.style.setProperty('--i', index);
+
+        const thumb = product.image || '';
+
+        card.innerHTML = `
+            <div class="card-img-wrap">
+                <img src="${thumb}" alt="${product.product_name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="card-img-placeholder" style="display:none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-name">${product.product_name}</div>
+                <div class="card-subtitle">${product.description || ''}</div>
+                <div class="card-color">${product.type || ''}</div>
+                <div class="card-price-row">
+                    <span class="card-price">Rp ${Number(product.price).toLocaleString('id-ID')}</span>
+                </div>
+                <div class="card-actions">
+                    <a href="/products/${product.id}" class="btn-beli">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        <span>Beli</span>
+                    </a>
+                    <button class="btn-keranjang" title="Tambah ke keranjang">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        card.querySelector('.btn-keranjang').addEventListener('click', (e) => {
+            e.preventDefault();
+            addToCart(product);
+        });
+
+        card.querySelector('.btn-beli').addEventListener('click', (e) => {
+            e.preventDefault();
+            addToCart(product);
+        });
+
+        container.appendChild(card);
+    });
+
+    if (productLength) productLength.innerHTML = products.length + ' Produk Tersedia';
+}
+
+// ══════════════════════════════════════════
+//  FILTER ENGINE (Kategori + Tingkat + Search + Sort)
+// ══════════════════════════════════════════
+function applyFilters() {
+    const searchTerm = (document.getElementById('product-search')?.value || '').toLowerCase().trim();
+    const sortValue  = document.querySelector('.sort-select')?.value || 'Terbaru';
+
+    // ── Kategori ──
+    const kategoriChecks = document.querySelectorAll('#sidebar-filter .kategori-check');
+    const selectedKategori = [];
+    let semuaKategori = false;
+    kategoriChecks.forEach(cb => {
+        if (!cb.checked) return;
+        if (cb.dataset.value === 'semua') semuaKategori = true;
+        else selectedKategori.push(cb.dataset.value.toLowerCase());
+    });
+
+    // ── Tingkat ──
+    const tingkatChecks = document.querySelectorAll('#sidebar-filter .tingkat-check');
+    const selectedTingkat = [];
+    let semuaTingkat = false;
+    tingkatChecks.forEach(cb => {
+        if (!cb.checked) return;
+        if (cb.dataset.value === 'semua') semuaTingkat = true;
+        else selectedTingkat.push(cb.dataset.value.toLowerCase());
+    });
+
+    // ── Filter produk ──
+    let result = allProducts.filter(p => {
+        // Search
+        if (searchTerm) {
+            const name  = (p.product_name || '').toLowerCase();
+            const desc  = (p.description  || '').toLowerCase();
+            const type  = (p.type         || '').toLowerCase();
+            if (!name.includes(searchTerm) && !desc.includes(searchTerm) && !type.includes(searchTerm)) return false;
+        }
+
+        // Kategori
+        if (!semuaKategori && selectedKategori.length > 0) {
+            const pType = (p.type || '').toLowerCase();
+            if (!selectedKategori.some(k => pType.includes(k))) return false;
+        }
+
+        // Tingkat (field level/difficulty)
+        if (!semuaTingkat && selectedTingkat.length > 0) {
+            const pLevel = (p.level || p.difficulty || '').toLowerCase();
+            if (!selectedTingkat.some(t => pLevel.includes(t))) return false;
+        }
+
+        return true;
+    });
+
+    // ── Sort ──
+    switch (sortValue) {
+        case 'Harga: Rendah ke Tinggi':
+            result.sort((a, b) => Number(a.price) - Number(b.price));
+            break;
+        case 'Harga: Tinggi ke Rendah':
+            result.sort((a, b) => Number(b.price) - Number(a.price));
+            break;
+        case 'Nama: A\u2013Z':
+            result.sort((a, b) => (a.product_name || '').localeCompare(b.product_name || '', 'id'));
+            break;
+        case 'Paling Populer':
+            result.sort((a, b) => (Number(b.sold) || 0) - (Number(a.sold) || 0));
+            break;
+        default: break;
+    }
+
+    renderProducts(result);
+    updateActiveFilterBadge();
+}
+
+// ── Badge jumlah filter aktif di tombol Filter ──
+function updateActiveFilterBadge() {
+    const btn = document.getElementById('filter-open-btn');
+    if (!btn) return;
+
+    let count = 0;
+    document.querySelectorAll('#sidebar-filter .kategori-check:not([data-value="semua"])').forEach(cb => { if (cb.checked) count++; });
+    document.querySelectorAll('#sidebar-filter .tingkat-check:not([data-value="semua"])').forEach(cb => { if (cb.checked) count++; });
+
+    // Hapus badge lama jika ada
+    btn.querySelector('.filter-active-badge')?.remove();
+
+    if (count > 0) {
+        const badge = document.createElement('span');
+        badge.className = 'filter-active-badge';
+        badge.textContent = count;
+        badge.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:var(--black);color:var(--white);border-radius:50%;font-size:10px;font-weight:700;margin-left:4px;';
+        btn.appendChild(badge);
+    }
+}
+
+
 
 const authModal = initAuthModal();
 
@@ -841,29 +954,72 @@ function initNotificationSystem() {
 function initProductSearch() {
     const searchInput = document.getElementById('product-search');
     if (!searchInput) return;
+    // Setiap keystroke → re-filter semua produk
+    searchInput.addEventListener('input', () => applyFilters());
+}
 
-    searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        const productCards = document.querySelectorAll('.product-card');
-        let visibleCount = 0;
+// ══════════════════════════════════════════
+//  SIDEBAR FILTER INIT
+// ══════════════════════════════════════════
+function initSidebarFilter() {
+    // ── Kategori: Semua / individual ──
+    const kategoriSemua = document.querySelector('#sidebar-filter .kategori-check[data-value="semua"]');
+    const kategoriItems  = document.querySelectorAll('#sidebar-filter .kategori-check:not([data-value="semua"])');
 
-        productCards.forEach(card => {
-            const productName = card.querySelector('.card-name')?.textContent.toLowerCase() || '';
-            const productSubtitle = card.querySelector('.card-subtitle')?.textContent.toLowerCase() || '';
-            const productType = card.querySelector('.card-color')?.textContent.toLowerCase() || '';
-
-            if (productName.includes(searchTerm) || productSubtitle.includes(searchTerm) || productType.includes(searchTerm)) {
-                card.style.display = '';
-                visibleCount++;
-            } else {
-                card.style.display = 'none';
+    if (kategoriSemua) {
+        // Klik "Semua" → uncheck semua item individual
+        kategoriSemua.addEventListener('change', () => {
+            if (kategoriSemua.checked) {
+                kategoriItems.forEach(cb => { cb.checked = false; });
             }
+            applyFilters();
         });
 
-        const productLength = document.getElementById("total-product");
-        if (productLength) {
-            productLength.innerHTML = visibleCount + " Produk Tersedia";
-        }
+        // Klik item individual → uncheck "Semua"
+        kategoriItems.forEach(cb => {
+            cb.addEventListener('change', () => {
+                if (cb.checked) kategoriSemua.checked = false;
+                // Jika tidak ada yg dicentang → fallback ke "Semua"
+                const anyChecked = [...kategoriItems].some(c => c.checked);
+                if (!anyChecked) kategoriSemua.checked = true;
+                applyFilters();
+            });
+        });
+    }
+
+    // ── Tingkat: Semua / individual ──
+    const tingkatSemua = document.querySelector('#sidebar-filter .tingkat-check[data-value="semua"]');
+    const tingkatItems  = document.querySelectorAll('#sidebar-filter .tingkat-check:not([data-value="semua"])');
+
+    if (tingkatSemua) {
+        tingkatSemua.addEventListener('change', () => {
+            if (tingkatSemua.checked) {
+                tingkatItems.forEach(cb => { cb.checked = false; });
+            }
+            applyFilters();
+        });
+
+        tingkatItems.forEach(cb => {
+            cb.addEventListener('change', () => {
+                if (cb.checked) tingkatSemua.checked = false;
+                const anyChecked = [...tingkatItems].some(c => c.checked);
+                if (!anyChecked) tingkatSemua.checked = true;
+                applyFilters();
+            });
+        });
+    }
+
+    // ── Tombol Reset ──
+    document.getElementById('sidebar-reset-btn')?.addEventListener('click', () => {
+        if (kategoriSemua) kategoriSemua.checked = true;
+        kategoriItems.forEach(cb => { cb.checked = false; });
+        if (tingkatSemua)  tingkatSemua.checked  = true;
+        tingkatItems.forEach(cb => { cb.checked = false; });
+        const searchInput = document.getElementById('product-search');
+        if (searchInput) searchInput.value = '';
+        const sortSelect = document.querySelector('.sort-select');
+        if (sortSelect) sortSelect.value = 'Terbaru';
+        applyFilters();
     });
 }
 
@@ -874,6 +1030,11 @@ document.addEventListener("DOMContentLoaded", () => {
     initAuthModal();
     initNotificationSystem();
     initProductSearch();
+    initSidebarFilter();
+
+    // Sort dropdown → re-filter
+    document.querySelector('.sort-select')?.addEventListener('change', () => applyFilters());
+
     // googleLogin();
 });
 
