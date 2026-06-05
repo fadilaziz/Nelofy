@@ -1,0 +1,47 @@
+:root {
+  --black: #111111;
+  --white: #ffffff;
+  --gray-100: #f5f5f5;
+  --gray-200: #dbdbdb;
+  --gray-300: #c9c9c9;
+  --gray-400: #a3a3a3;
+  --gray-500: #737373;
+  --gray-600: #525252;
+  --gray-700: #404040;
+  --red: #e11d48;
+  --green: #16a34a;
+  --font: 'Inter', sans-serif;
+  --radius: 4px;
+  --transition: 0.2s ease;
+}
+
+[data-theme='dark'] {
+  --black: #ffffff;
+  --white: #111111;
+  --gray-100: #1a1a1a;
+  --gray-200: #2a2a2a;
+  --gray-300: #3a3a3a;
+  --gray-400: #525252;
+  --gray-500: #a3a3a3;
+  --gray-600: #d4d4d4;
+  --gray-700: #e5e5e5;
+}
+
+/* Dark Mode Overrides */
+[data-theme='dark'] .nav-profile-avatar {
+  background: linear-gradient(135deg, #ffffff 0%, #e5e5e5 100%) !important;
+  color: #111111 !important;
+}
+
+[data-theme='dark'] .card-img-wrap {
+  background: #181818 !important;
+}
+
+[data-theme='dark'] .card-img-wrap img {
+  filter: brightness(0.9) !important;
+}
+
+[data-theme='dark'] body {
+  background: var(--white);
+  color: var(--black);
+}
