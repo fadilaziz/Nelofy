@@ -197,23 +197,24 @@ export const update_status_order = async (payload) => {
 
   //Verifikasi Signature dari database dan payload
   if (orderdata[0].signature == payload.signature) {
-    //Update status order
-    if (payload.status == 'SUCCESS') {
+    //Jika status PAID maka akan update status order
+    if (payload.status == 'PAID') {
       const [order] = await sql`
             UPDATE orders SET status = ${payload.status}
             WHERE signature = ${payload.signature}
             AND order_id = ${payload.order_id}`;
       await sql`
-            UPDATE invoices SET status = 'paid'
+            UPDATE invoices SET status = 'PAID'
             WHERE no_invoice = ${payload.order_id}`;
       return order;
+      //Jika status EXPIRED maka akan update status order
     } else if (payload.status == 'EXPIRED') {
       const [order] = await sql`
             UPDATE orders SET status = ${payload.status}
             WHERE signature = ${payload.signature}
             AND order_id = ${payload.order_id}`;
       await sql`
-            UPDATE invoices SET status = 'ex'
+            UPDATE invoices SET status = 'EXPIRED'
             WHERE no_invoice = ${payload.order_id}`;
       return order;
     } else {
