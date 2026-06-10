@@ -1,11 +1,12 @@
 import sql from '../../database/db.js';
 import bcrypt from 'bcrypt';
+import { broadcastUpdate } from './admin_sse.js';
 
 // Ambil data profile dari database
 const get_admin_data = async (id_admin) => {
   try {
     const adminData = await sql`
-    SELECT id, full_name, username, user_email, user_phone, status, role
+    SELECT id, full_name, username, email, phone, status, role
     FROM users
     WHERE id = ${id_admin}`;
 
@@ -36,8 +37,8 @@ const get_admin_data = async (id_admin) => {
 const get_all_user_data = async () => {
   try {
     const userData = await sql`
-    SELECT id, full_name, username, user_email, user_phone, status, role
-    FROM users
+    SELECT id, full_name, username, email, phone, status, role
+    FROM users WHERE role = 'user'
     ORDER BY id DESC`;
 
     return {
@@ -58,16 +59,17 @@ const get_all_user_data = async () => {
 // Menyimpan data user baru
 const add_user_data = async (data) => {
   try {
-    const { full_name, username, user_email, user_phone, status, role, password } = data;
-    
+    const { full_name, username, user_email, password, user_phone } = data;
+
     // Hash password
-    const hashedPassword = await bcrypt.hash(password || '12345678', 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // Simpan ke database
     await sql`
-    INSERT INTO users (full_name, username, user_email, user_phone, status, role, user_pass)
-    VALUES (${full_name}, ${username}, ${user_email}, ${user_phone}, ${status}, ${role}, ${hashedPassword})`;
+    INSERT INTO users (full_name, username, email, password, phone, status, role)
+    VALUES (${full_name}, ${username}, ${user_email}, ${hashedPassword}, ${user_phone}, 'active', 'user')`;
 
+    broadcastUpdate('user', 'created');
     return {
       code: 200,
       status: 'success',
@@ -86,22 +88,23 @@ const add_user_data = async (data) => {
 const update_user_data = async (id, data) => {
   try {
     const { full_name, username, user_email, user_phone, status, role, password } = data;
-    
+
     if (password && password.trim() !== '') {
       const hashedPassword = await bcrypt.hash(password, 10);
       await sql`
-      UPDATE users 
-      SET full_name = ${full_name}, username = ${username}, user_email = ${user_email}, 
-          user_phone = ${user_phone}, status = ${status}, role = ${role}, user_pass = ${hashedPassword}
+      UPDATE users
+      SET full_name = ${full_name}, username = ${username}, email = ${user_email},
+          phone = ${user_phone}, status = ${status}, role = ${role}, password = ${hashedPassword}
       WHERE id = ${id}`;
     } else {
       await sql`
-      UPDATE users 
-      SET full_name = ${full_name}, username = ${username}, user_email = ${user_email}, 
-          user_phone = ${user_phone}, status = ${status}, role = ${role}
+      UPDATE users
+      SET full_name = ${full_name}, username = ${username}, email = ${user_email},
+          phone = ${user_phone}, status = ${status}, role = ${role}
       WHERE id = ${id}`;
     }
 
+    broadcastUpdate('user', 'updated');
     return {
       code: 200,
       status: 'success',
@@ -119,10 +122,12 @@ const update_user_data = async (id, data) => {
 // Menghapus data user
 const delete_user_data = async (id) => {
   try {
-    // Hapus juga order yang terkait untuk menghindari foreign key constraint error jika ada
+    // Hapus juga invoice & order yang terkait untuk menghindari foreign key constraint error jika ada
+    await sql`DELETE FROM invoices WHERE order_id IN (SELECT id FROM orders WHERE user_id = ${id})`;
     await sql`DELETE FROM orders WHERE user_id = ${id}`;
     await sql`DELETE FROM users WHERE id = ${id}`;
 
+    broadcastUpdate('user', 'deleted');
     return {
       code: 200,
       status: 'success',
@@ -141,9 +146,9 @@ const delete_user_data = async (id) => {
 const get_all_orders = async () => {
   try {
     const orderData = await sql`
-    SELECT o.id, o.order_id, o.user_id, o.product_id, o.total_amount, o.status, 
+    SELECT o.id, o.order_id, o.user_id, o.product_id, o.total_amount, o.status,
            o.signature, o.qris_url, o.expired_at, o.qris_image, o.created_at,
-           u.full_name AS user_fullname, u.username AS user_username, 
+           u.full_name AS user_fullname, u.username AS user_username,
            p.product_name
     FROM orders o
     LEFT JOIN users u ON o.user_id = u.id
@@ -183,10 +188,18 @@ const add_order_data = async (data) => {
     const qris_url = '';
     const qris_image = '';
 
-    await sql`
+    const result = await sql`
     INSERT INTO orders (order_id, user_id, product_id, total_amount, status, signature, qris_url, expired_at, qris_image, created_at)
-    VALUES (${order_id}, ${user_id}, ${product_id}, ${total_amount}, ${status}, ${signature}, ${qris_url}, ${expired_at}, ${qris_image}, ${new Date()})`;
+    VALUES (${order_id}, ${user_id}, ${product_id}, ${total_amount}, ${status}, ${signature}, ${qris_url}, ${expired_at}, ${qris_image}, ${new Date()})
+    RETURNING id`;
 
+    const order_db_id = result[0].id;
+    const invoiceStatus = status === 'SUCCESS' ? 'paid' : status === 'EXPIRED' ? 'ex' : 'pending';
+    await sql`
+    INSERT INTO invoices (order_id, no_invoice, jatuh_tempo, status, created_at)
+    VALUES (${order_db_id}, ${order_id}, ${expired_at}, ${invoiceStatus}, ${new Date()})`;
+
+    broadcastUpdate('order', 'created');
     return {
       code: 200,
       status: 'success',
@@ -207,10 +220,17 @@ const update_order_data = async (id, data) => {
     const { user_id, product_id, total_amount, status } = data;
 
     await sql`
-    UPDATE orders 
+    UPDATE orders
     SET user_id = ${user_id}, product_id = ${product_id}, total_amount = ${total_amount}, status = ${status}
     WHERE id = ${id}`;
 
+    const invoiceStatus = status === 'SUCCESS' ? 'paid' : status === 'EXPIRED' ? 'ex' : 'pending';
+    await sql`
+    UPDATE invoices
+    SET status = ${invoiceStatus}
+    WHERE order_id = ${id}`;
+
+    broadcastUpdate('order', 'updated');
     return {
       code: 200,
       status: 'success',
@@ -228,8 +248,10 @@ const update_order_data = async (id, data) => {
 // Menghapus data order
 const delete_order_data = async (id) => {
   try {
+    await sql`DELETE FROM invoices WHERE order_id = ${id}`;
     await sql`DELETE FROM orders WHERE id = ${id}`;
 
+    broadcastUpdate('order', 'deleted');
     return {
       code: 200,
       status: 'success',

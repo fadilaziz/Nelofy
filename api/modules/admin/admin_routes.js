@@ -1,5 +1,5 @@
 import express from 'express';
-import { verifyToken } from '../../middleware/auth_middleware.js';
+import { verifyAdminToken, isAdmin } from '../../middleware/auth_middleware.js';
 import {
   get_admin_data,
   get_all_user_data,
@@ -11,26 +11,30 @@ import {
   update_order_data,
   delete_order_data,
   get_products,
+  sse_stream,
 } from './admin_controller.js';
 
 const router = express.Router();
 
 // Profile/Admin data route
-router.get('/admin-data', verifyToken, get_admin_data);
+router.get('/admin-data', verifyAdminToken, isAdmin, get_admin_data);
 
 // User CRUD routes
-router.get('/user-data', verifyToken, get_all_user_data);
-router.post('/add-user-data', verifyToken, add_user_data);
-router.put('/user-data/:id', verifyToken, update_user_data);
-router.delete('/user-data/:id', verifyToken, delete_user_data);
+router.get('/user-data', verifyAdminToken, isAdmin, get_all_user_data);
+router.post('/add-user-data', verifyAdminToken, isAdmin, add_user_data);
+router.put('/user-data/:id', verifyAdminToken, isAdmin, update_user_data);
+router.delete('/user-data/:id', verifyAdminToken, isAdmin, delete_user_data);
 
 // Order CRUD routes
-router.get('/order-data', verifyToken, get_all_orders);
-router.post('/add-order-data', verifyToken, add_order_data);
-router.put('/order-data/:id', verifyToken, update_order_data);
-router.delete('/order-data/:id', verifyToken, delete_order_data);
+router.get('/order-data', verifyAdminToken, isAdmin, get_all_orders);
+router.post('/add-order-data', verifyAdminToken, isAdmin, add_order_data);
+router.put('/order-data/:id', verifyAdminToken, isAdmin, update_order_data);
+router.delete('/order-data/:id', verifyAdminToken, isAdmin, delete_order_data);
 
 // Products dropdown list
-router.get('/products-list', verifyToken, get_products);
+router.get('/products-list', verifyAdminToken, isAdmin, get_products);
+
+// SSE realtime stream
+router.get('/events', verifyAdminToken, isAdmin, sse_stream);
 
 export default router;

@@ -10,7 +10,7 @@ export const capture_payload_login = async (payload) => {
   }
 
   //Capture Payload Login
-  const { user_email, user_pass } = payload;
+  const { email, password } = payload;
 
   //Kembalikan payload yang ditangkap
   return payload;
@@ -23,11 +23,11 @@ export const validation_payload_login = async (data) => {
     throw new Error('Payload is empty');
   }
   //Cek apakah email ada
-  if (!data.user_email) {
+  if (!data.email) {
     throw new Error('Email is required');
   }
   //Cek apakah password ada
-  if (!data.user_pass) {
+  if (!data.password) {
     throw new Error('Password is required');
   }
   return true;
@@ -40,21 +40,21 @@ export const login = async (data) => {
     throw new Error('Data is empty');
   }
 
-  //Cek apakah email ada
-  const check_email = await sql`SELECT * FROM users WHERE user_email = ${data.user_email}`;
+  //Cek apakah email ada dan role nya user
+  const check_email = await sql`SELECT * FROM users WHERE email = ${data.email} AND role = 'user'`;
   if (check_email.count === 0) {
-    throw new Error('Email tidak terdaftar, Silahkan cek kembali');
+    throw new Error('Email tidak terdaftar atau role bukan user, Silahkan cek kembali');
   }
 
   //Cek apakah password benar
-  const check_password = await bcrypt.compare(data.user_pass, check_email[0].user_pass);
+  const check_password = await bcrypt.compare(data.password, check_email[0].password);
   if (!check_password) {
     throw new Error('Password salah, Silahkan cek kembali');
   }
 
   //Ambil data yang login
   const data_user =
-    await sql`SELECT id, full_name, username, user_email, user_phone, status FROM users WHERE user_email = ${data.user_email}`;
+    await sql`SELECT id, full_name, username, email, phone, status FROM users WHERE email = ${data.email}`;
 
   //Kembalikan data yang login
   return data_user[0];
@@ -75,7 +75,7 @@ export const get_user_by_id = async (id) => {
 
   //Ambil data yang login
   const data_user =
-    await sql`SELECT id, full_name, username, user_email, user_phone, status FROM users WHERE id = ${id}`;
+    await sql`SELECT id, full_name, username, email, phone, status, role FROM users WHERE id = ${id}`;
 
   //Kembalikan data yang login
   return data_user[0];
@@ -98,49 +98,46 @@ export const capture_payload_login_admin = async (payload) => {
 
 //Validasi Payload Login
 export const validation_payload_login_admin = async (data) => {
-  console.log('INI Validasi data : ', data);
   //Cek apakah payload ada
   if (!data || Object.keys(data).length === 0) {
     throw new Error('Payload is empty');
   }
   //Cek apakah email ada
-  if (!data.user_email) {
+  if (!data.email) {
     throw new Error('Email is required');
   }
   //Cek apakah password ada
-  if (!data.user_pass) {
+  if (!data.password) {
     throw new Error('Password is required');
   }
   //Cek apakah role ada
-  if (data.user_role === 'admin') {
+  if (data.role === 'admin') {
     return true;
   }
+  console.log('INI INI : ', data);
   throw new Error('Role is not admin');
 };
 
 //Cek apakah data login admin ada
 export const login_admin = async (data) => {
-  console.log('INI SERVICE LOGIN : ', data);
   //Cek apakah data ada
   if (!data || Object.keys(data).length === 0) {
     throw new Error('Data is empty');
   }
 
   //Cek apakah email ada dan role nya admin
-  const check_user =
-    await sql`SELECT * FROM users WHERE user_email = ${data.user_email} AND role = 'admin'`;
+  const check_user = await sql`SELECT * FROM users WHERE email = ${data.email} AND role = 'admin'`;
   if (check_user.count === 0) {
     throw new Error('Email tidak terdaftar atau role bukan admin, Silahkan cek kembali');
   }
 
   //Cek apakah password benar
-  // const check_password = await bcrypt.compare(data.user_pass, check_user[0].user_pass);
-  // if (!check_password) {
-  //   throw new Error('Password salah, Silahkan cek kembali');
-  // }
+  const check_password = await bcrypt.compare(data.password, check_user[0].password);
+  if (!check_password) {
+    throw new Error('Password salah, Silahkan cek kembali');
+  }
 
   const user = check_user[0];
-  console.log(user);
 
   //Cek apakah yang login admin
   if (user.role === 'admin') {
@@ -182,15 +179,15 @@ export const capture_payload_register = async (payload) => {
   }
 
   //Capture Payload Register
-  const { full_name, username, user_email, user_pass, user_phone } = payload;
+  const { full_name, username, email, password, phone } = payload;
 
   //Kembalikan payload yang ditangkap
   return {
     full_name,
     username,
-    user_email,
-    user_pass,
-    user_phone,
+    email,
+    password,
+    phone,
   };
 };
 
@@ -209,17 +206,17 @@ export const validation_payload_register = async (data) => {
   if (!data.username) {
     throw new Error('Username is required');
   }
-  //Cek apakah user_email ada
-  if (!data.user_email.includes('@')) {
-    throw new Error('User email is invalid');
+  //Cek apakah email ada
+  if (!data.email.includes('@')) {
+    throw new Error('Email is invalid');
   }
-  //Cek apakah user_pass ada
-  if (data.user_pass.length < 8) {
-    throw new Error('User pass is too short');
+  //Cek apakah password ada
+  if (data.password.length < 8) {
+    throw new Error('Password is too short');
   }
-  //Cek apakah user_phone ada
-  if (data.user_phone.length < 10) {
-    throw new Error('User phone is too short');
+  //Cek apakah phone ada
+  if (data.phone.length < 10) {
+    throw new Error('Phone is too short');
   }
   return true;
 };
@@ -235,7 +232,7 @@ export const check_email = async (data) => {
   const check_email = await sql`
         SELECT *
         FROM users
-        WHERE user_email = ${data.user_email}`;
+        WHERE email = ${data.email}`;
   if (check_email.count > 0) {
     throw new Error('Email sudah terdaftar');
   }
@@ -253,13 +250,13 @@ export const save_data_register = async (data) => {
 
   //Bcrypt Password
   const salt = await bcrypt.genSalt(10);
-  const hash_password = await bcrypt.hash(data.user_pass, salt);
-  data.user_pass = hash_password;
+  const hash_password = await bcrypt.hash(data.password, salt);
+  data.password = hash_password;
 
   //Menyimpan data
   const result = await sql`
-        INSERT INTO users (full_name, username, user_email, user_pass, user_phone)
-        VALUES (${data.full_name}, ${data.username}, ${data.user_email}, ${data.user_pass}, ${data.user_phone})`;
+        INSERT INTO users (full_name, username, email, password, phone, role, google_id, auth_provider, status, reset_token, reset_token_expiry)
+        VALUES (${data.full_name}, ${data.username}, ${data.email}, ${data.password}, ${data.phone}, 'user', null, 'local', 'active', null, null)`;
 
   //Cek apakah data berhasil disimpan
   if (result.count === 0) {
@@ -268,41 +265,43 @@ export const save_data_register = async (data) => {
 
   //Ambil data yang baru saja disimpan
   const data_user = await sql`
-    SELECT id,full_name, username, user_email,user_phone
+    SELECT id,full_name, username, email,phone
     FROM users
-    WHERE user_email = ${data.user_email}`;
+    WHERE email = ${data.email}`;
+
+  console.log('INI DATA USER : ', data_user);
 
   //Kembalikan data yang baru saja disimpan
   return data_user[0];
 };
 
 //Send Email
-export const send_email = async (data) => {
-  try {
-    //Cek apakah email berhasil terkirim
-    let result = await email_response.send_email(data);
-    if (result.code === 200) {
-      //Ubah status pending menjadi success
-      await sql(`
-                UPDATE queue
-                SET status='success'
-                WHERE type = 'email';`);
-      data.code = 200;
-      data.status = 'success';
-      data.message = 'success to send email';
-    } else {
-      console.log('Pesan email gagal terkirim...!');
-      data.code = 400;
-      data.status = 'failed';
-      data.message = 'failed to send email';
-    }
-  } catch (e) {
-    console.log(e.stack);
-    data.status = 'failed';
-    data.code = 400;
-  }
-  return data;
-};
+// export const send_email = async (data) => {
+//   try {
+//     //Cek apakah email berhasil terkirim
+//     let result = await email_response.send_email(data);
+//     if (result.code === 200) {
+//       //Ubah status pending menjadi success
+//       await sql(`
+//                 UPDATE queue
+//                 SET status='success'
+//                 WHERE type = 'email';`);
+//       data.code = 200;
+//       data.status = 'success';
+//       data.message = 'success to send email';
+//     } else {
+//       console.log('Pesan email gagal terkirim...!');
+//       data.code = 400;
+//       data.status = 'failed';
+//       data.message = 'failed to send email';
+//     }
+//   } catch (e) {
+//     console.log(e.stack);
+//     data.status = 'failed';
+//     data.code = 400;
+//   }
+//   return data;
+// };
 
 const service = {
   capture_payload_login,
@@ -317,7 +316,6 @@ const service = {
   validation_payload_register,
   check_email,
   save_data_register,
-  send_email,
 };
 
 export default service;

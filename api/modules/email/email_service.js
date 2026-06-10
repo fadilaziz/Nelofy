@@ -3,25 +3,16 @@ import { send_email } from './send_email.js';
 
 // Send Email
 export const send_email_worker = async () => {
-  //Ambil data queue yang statusnya pending dan type email
+  //Ambil data queue yang statusnya pending dan type email (1 baris saja)
   const data_email = await sql`
-    SELECT message,destination,subject
+    SELECT id, message, destination, subject
     FROM queue
-    WHERE type = 'email' AND status = 'pending'`;
+    WHERE type = 'email' AND status = 'pending'
+    LIMIT 1`;
 
   //Jika data email tidak ada, maka return
   if (data_email.length === 0) {
     return;
-  }
-
-  //Cek apakah semua pesan email berhasil terkirim
-  const data_email2 = await sql`
-    SELECT type,status
-    FROM queue
-    WHERE type = 'email'`;
-
-  if (data_email2.length === 0) {
-    return; //berhenti jika semua pesan berhasil terkirim
   }
 
   //Data yang dibutuhkan untuk mengirim pesan email
@@ -37,12 +28,12 @@ export const send_email_worker = async () => {
   };
 
   //Kirim email
-  // const email = require('./send_email');
-  await send_email(data);
+  const result = await send_email(data);
 
-  //Update status email
+  //Update status email untuk baris yang spesifik
+  const status = (result && result.code === 200) ? 'success' : 'failed';
   await sql`
     UPDATE queue
-    SET status = 'success'
-    WHERE type = 'email' AND status = 'pending'`;
+    SET status = ${status}
+    WHERE id = ${data_email[0].id}`;
 };

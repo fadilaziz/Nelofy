@@ -4,12 +4,13 @@ import { formatRupiah } from '../../common/helper';
 
 //Payload checkout
 export const capture_payload_checkout = async (payload) => {
+  console.log('ini data checkout', payload);
   if (!payload || Object.keys(payload).length === 0) {
     throw new Error('Payload is empty');
   }
 
   const dataUser = await sql`
-    SELECT id, full_name, username, user_email, user_phone
+    SELECT id, full_name, username, email, phone
     FROM users
     WHERE id = ${payload.user_id}`;
 
@@ -17,8 +18,8 @@ export const capture_payload_checkout = async (payload) => {
     user_id = dataUser[0].id,
     full_name = dataUser[0].full_name,
     username = dataUser[0].username,
-    user_email = dataUser[0].user_email,
-    user_phone = dataUser[0].user_phone,
+    email = dataUser[0].email,
+    phone = dataUser[0].phone,
     voucher_code,
     product_id,
     qty,
@@ -29,8 +30,8 @@ export const capture_payload_checkout = async (payload) => {
     user_id,
     full_name,
     username,
-    user_email,
-    user_phone,
+    email,
+    phone,
     voucher_code,
     product_id,
     qty,
@@ -49,9 +50,9 @@ export const validation_payload_checkout = async (payload) => {
   }
 
   const regex = /\S+@\S+\.\S+/;
-  if (!payload.user_email) {
+  if (!payload.email) {
     throw new Error('User email is required');
-  } else if (!regex.test(payload.user_email)) {
+  } else if (!regex.test(payload.email)) {
     throw new Error('Email is not valid');
   }
 
@@ -113,9 +114,10 @@ export const calculate_discount = async (payload) => {
 
 //Transaksi Full checkout
 export const transaction = async (payload) => {
+  console.log('payload ', payload);
   return await sql.begin(async (t) => {
     const total = payload.total;
-    const url = 'https://klikqris.com/api/sandbox/qris/create';
+    const url = process.env.KLIKQRIS_URL;
 
     //Generate Invoice Random
     function generateInvoiceRandom() {
@@ -162,7 +164,14 @@ export const transaction = async (payload) => {
     const [order] = await t`
             INSERT INTO orders (order_id, user_id,product_id,total_amount, status, signature, qris_url, expired_at, qris_image,created_at)
             VALUES (${no_invoice}, ${payload.user_id}, ${payload.product_id}, ${res.data.data.total_amount}, 'PENDING', ${res.data.data.signature}, ${res.data.data.qris_url}, ${res.data.data.expired_at}, ${res.data.data.qris_image},${new Date()})
+            RETURNING id
         `;
+
+    // Simpan data Invoice
+    // await t`
+    //         INSERT INTO invoices (order_id, no_invoice, jatuh_tempo, qty, subtotal, total, status, created_at)
+    //         VALUES (${order.id}, ${no_invoice}, ${res.data.data.expired_at}, ${payload.qty}, ${payload.price}, ${payload.total}, 'pending', ${new Date()},)
+    //     `;
 
     payload.no_invoice = res.data.data.order_id;
     payload.signature = res.data.data.signature;
@@ -194,12 +203,18 @@ export const update_status_order = async (payload) => {
             UPDATE orders SET status = ${payload.status}
             WHERE signature = ${payload.signature}
             AND order_id = ${payload.order_id}`;
+      await sql`
+            UPDATE invoices SET status = 'paid'
+            WHERE no_invoice = ${payload.order_id}`;
       return order;
     } else if (payload.status == 'EXPIRED') {
       const [order] = await sql`
             UPDATE orders SET status = ${payload.status}
             WHERE signature = ${payload.signature}
             AND order_id = ${payload.order_id}`;
+      await sql`
+            UPDATE invoices SET status = 'ex'
+            WHERE no_invoice = ${payload.order_id}`;
       return order;
     } else {
       throw new Error('Status tidak cocok');
@@ -216,18 +231,18 @@ export const order_success_send_message = async (payload) => {
     SELECT user_id FROM orders
     WHERE order_id = ${payload.order_id}`;
 
-  //Ambil user_phone dan user_email
+  //Ambil phone dan email
   const userData = await sql`
-    SELECT full_name,user_phone, user_email
+    SELECT full_name,phone, email
     FROM users
     WHERE id = ${orderData[0].user_id}`;
 
   payload.full_name = userData[0].full_name;
-  payload.user_phone = userData[0].user_phone;
-  payload.user_email = userData[0].user_email;
+  payload.phone = userData[0].phone;
+  payload.email = userData[0].email;
 
   //Kondisi if jika tidak ada phone atau email
-  if (!payload.user_phone || !payload.user_email) {
+  if (!payload.phone || !payload.email) {
     throw new Error('User phone or email is not found');
   }
 
@@ -247,7 +262,7 @@ Terima kasih telah menggunakan layanan kami.
 _Pesan ini dikirim secara otomatis._`;
 
   //Menambahkan destination dan message ke dalam payload
-  payload.destination = userData[0].user_phone;
+  payload.destination = userData[0].phone;
   payload.message = message;
 
   //Kirim pesan whatsapp
@@ -265,11 +280,11 @@ export const checkout_send_queue = async (payload) => {
 
   //Mengambil data user
   const user_data = await sql`
-    SELECT full_name, user_email
+    SELECT full_name, email
     FROM users
     WHERE id = ${payload.user_id}`;
   payload.full_name = user_data[0].full_name;
-  payload.user_email = user_data[0].user_email;
+  payload.email = user_data[0].email;
 
   //Send Email
   const email_message = `
@@ -423,7 +438,7 @@ export const checkout_send_queue = async (payload) => {
   //Insert queue email
   await sql`
         INSERT INTO queue (type, message,destination, status, subject)
-        VALUES (${'email'}, ${email_message}, ${payload.user_email}, ${'pending'}, ${'Info Pembayaran Tagihan'})`;
+        VALUES (${'email'}, ${email_message}, ${payload.email}, ${'pending'}, ${'Info Pembayaran Tagihan'})`;
 
   //Send WA
   const whatsapp_message = `
@@ -454,7 +469,7 @@ Terima kasih atas kepercayaan Anda!`;
   //Insert queue whatsapp
   await sql`
         INSERT INTO queue (type, message,destination, status)
-        VALUES (${'whatsapp'}, ${whatsapp_message}, ${payload.user_phone}, ${'pending'})`;
+        VALUES (${'whatsapp'}, ${whatsapp_message}, ${payload.phone}, ${'pending'})`;
 
   return payload;
 };

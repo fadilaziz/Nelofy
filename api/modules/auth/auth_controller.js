@@ -47,7 +47,6 @@ export const login = async (req, res) => {
 //LOGIN ADMIN
 export const login_admin = async (req, res) => {
   try {
-    console.log('INI REQ :', req.body);
     //Capture Payload
     let data = await service.capture_payload_login_admin(req.body);
     //Validation Payload
@@ -58,7 +57,7 @@ export const login_admin = async (req, res) => {
     const SecretKey = process.env.SECRET_KEY_JWT;
     const token = jwt.sign({ id: dataUser.id }, SecretKey, { expiresIn: '1h' });
     //Set Cookie dengan durasi 1 hari
-    res.cookie('token', token, {
+    res.cookie('admin_token', token, {
       httpOnly: true,
       // secure: process.env.NODE_ENV === 'production',
       secure: true,
@@ -114,6 +113,44 @@ export const check_session = async (req, res) => {
   }
 };
 
+//Check Session Admin
+export const check_session_admin = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const token = req.cookies.admin_token;
+    if (!token) {
+      return res.status(401).json({
+        code: 401,
+        status: 'Unauthorized',
+        message: 'Admin token tidak ada',
+      });
+    }
+    const decoded = jwt.verify(token, process.env.SECRET_KEY_JWT);
+    const dataUser = await service.get_user_by_id(decoded.id);
+    if (!dataUser || dataUser.role !== 'admin') {
+      return res.status(403).json({
+        code: 403,
+        status: 'Forbidden',
+        message: 'Akses ditolak',
+      });
+    }
+    return res.status(200).json({
+      code: 200,
+      status: 'success',
+      message: 'Session admin ditemukan',
+      user: {
+        username: dataUser.username,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      code: 500,
+      status: 'error',
+      message: error.message,
+    });
+  }
+};
+
 //Logout
 export const logout = async (req, res) => {
   try {
@@ -132,12 +169,30 @@ export const logout = async (req, res) => {
   }
 };
 
+//Logout Admin
+export const logout_admin = async (req, res) => {
+  try {
+    res.cookie('admin_token', '', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      expires: new Date(0),
+    });
+    return res.status(200).json({
+      code: 200,
+      message: 'Logout admin berhasil',
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 //Config Auth Google
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
-  'https://e10b-180-254-122-151.ngrok-free.app/callback_auth'
+  `${process.env.URL_BACKEND}/auth/callback_auth`
 );
 
 //Auth Google
@@ -145,7 +200,7 @@ export const auth_google = async (req, res) => {
   const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
 
   const options = {
-    redirect_uri: 'https://e10b-180-254-122-151.ngrok-free.app/callback_auth',
+    redirect_uri: `${process.env.URL_BACKEND}/auth/callback_auth`,
     client_id: process.env.GOOGLE_CLIENT_ID,
     access_type: 'offline',
     response_type: 'code',
@@ -179,8 +234,8 @@ export const callback_auth = async (req, res) => {
 
     const check_user = await service.email_check(email);
 
-    //Membuat token JWT dan cookie
-    const token = jwt.sign({ id: payload.sub }, process.env.SECRET_KEY_JWT, { expiresIn: '1h' });
+    //Membuat token JWT dan cookie menggunakan database user ID
+    const token = jwt.sign({ id: check_user.id }, process.env.SECRET_KEY_JWT, { expiresIn: '1h' });
 
     //Set Cookie dengan durasi 1 hari
     res.cookie('token', token, {
@@ -190,7 +245,7 @@ export const callback_auth = async (req, res) => {
       sameSite: 'lax',
     });
 
-    return res.redirect('http://nelofy.id/products');
+    return res.redirect(process.env.URL_FRONTEND || '/');
   } catch (error) {
     console.error('Gagal menukar kode:', error);
     res.status(500).send(error.message);
@@ -201,6 +256,7 @@ export const callback_auth = async (req, res) => {
 export const registration = async (req, res) => {
   // const successSteps = [];
   try {
+    console.log('INI REQ BODY : ', req.body);
     let data = await service.capture_payload_register(req.body);
     // successSteps.push("Capture Payload Berhasil");
 
@@ -213,7 +269,7 @@ export const registration = async (req, res) => {
     const dataUser = await service.save_data_register(data);
     // successSteps.push("Save Data Berhasil");
 
-    await service.send_email(data);
+    // await service.send_email(data);
     // successSteps.push("Send Email Berhasil");
 
     //Buat Session JWT | Auto Login

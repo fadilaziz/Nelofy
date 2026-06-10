@@ -2,7 +2,6 @@ import service from './reset_password_service';
 
 //Kirim request change password ke email user
 export const request_change_password = async (req, res) => {
-  console.log(req.body);
   try {
     const data = await service.request_change_password(req.body);
     return res.status(200).json({
@@ -24,6 +23,25 @@ export const request_change_password = async (req, res) => {
 export const request_reset_password = async (req, res) => {
   try {
     const data = await service.request_reset_password(req.body);
+    return res.status(200).json({
+      code: 200,
+      status: 'success',
+      message: 'Password Reset URL Sent',
+      data: data,
+    });
+  } catch (error) {
+    return res.status(401).json({
+      code: 401,
+      status: 'error',
+      message: error.message,
+    });
+  }
+};
+
+//Kirim request reset password ke email Admin
+export const request_reset_password_admin = async (req, res) => {
+  try {
+    const data = await service.request_reset_password_admin(req.body);
     return res.status(200).json({
       code: 200,
       status: 'success',

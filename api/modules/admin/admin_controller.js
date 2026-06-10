@@ -1,4 +1,5 @@
 import service from './admin_service.js';
+import { addSseClient, removeSseClient, getSseClientCount } from './admin_sse.js';
 
 // Ambil data Admin
 export const get_admin_data = async (req, res) => {
@@ -90,6 +91,7 @@ export const get_all_orders = async (req, res) => {
 // Menambahkan data order
 export const add_order_data = async (req, res) => {
   try {
+    console.log('ini data order', req.body);
     const result = await service.add_order_data(req.body);
     return res.status(result.code).json(result);
   } catch (error) {
@@ -143,4 +145,35 @@ export const get_products = async (req, res) => {
       message: error.message,
     });
   }
+};
+
+// SSE stream — realtime dashboard updates
+export const sse_stream = (req, res) => {
+  // Set SSE headers
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache, no-transform');
+  res.setHeader('Connection', 'keep-alive');
+  res.setHeader('X-Accel-Buffering', 'no'); // disable nginx buffering
+  res.flushHeaders();
+
+  // Kirim event 'connected' awal
+  res.write(`event: connected\ndata: ${JSON.stringify({ clients: getSseClientCount() + 1 })}\n\n`);
+
+  // Tambahkan ke pool client
+  addSseClient(res);
+
+  // Heartbeat setiap 25 detik agar koneksi tidak di-close oleh proxy/browser
+  const heartbeat = setInterval(() => {
+    try {
+      res.write(': heartbeat\n\n');
+    } catch {
+      clearInterval(heartbeat);
+    }
+  }, 25000);
+
+  // Cleanup saat client disconnect
+  req.on('close', () => {
+    clearInterval(heartbeat);
+    removeSseClient(res);
+  });
 };

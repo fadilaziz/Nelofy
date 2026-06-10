@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 const get_current_user = async (user_id) => {
   try {
     const data = await sql`
-        SELECT full_name, username, user_email, user_phone
+        SELECT full_name, username, email, phone
         FROM users
         WHERE id = ${user_id}`;
 

@@ -61,24 +61,18 @@ export const hit_api_woowa_send_wa = async (data) => {
 export const send_wa = async () => {
   const data = {};
   try {
-    //Ambil data worker dari tb queue
+    //Ambil data worker dari tb queue (1 baris pending terlama)
     let rows = await sql`
-        SELECT message,destination
+        SELECT id, message, destination
         FROM queue
         WHERE type = 'whatsapp'
-        AND status = 'pending'`;
-
-    //Ambil data type dan status untuk validasi yang di ambil dari yang terbaru
-    let rows2 = await sql`
-        SELECT type,status
-        FROM queue
-        WHERE type = 'whatsapp'
-        ORDER BY id DESC
+        AND status = 'pending'
+        ORDER BY id ASC
         LIMIT 1`;
 
-    //Cek apakah semua pesan whatsapp berhasil terkirim
-    if (rows2[0].status == 'success') {
-      return; //berhenti jika semua pesan berhasil terkirim
+    //Jika tidak ada antrean pending, langsung return
+    if (rows.length === 0) {
+      return;
     }
 
     //Data yang dibutuhkan untuk mengirim pesan whatsapp
@@ -86,10 +80,11 @@ export const send_wa = async () => {
     data.destination = rows[0].destination;
 
     //Kirim ke whatsapp
-    await hit_api_woowa_send_wa(data);
+    const result = await hit_api_woowa_send_wa(data);
 
-    //Update status queue ke status sukses
-    await sql`UPDATE queue SET status='success' WHERE type = 'whatsapp' AND status = 'pending';`;
+    //Update status queue ke status sukses/gagal secara spesifik
+    const status = (result && result.code === 200) ? 'success' : 'failed';
+    await sql`UPDATE queue SET status = ${status} WHERE id = ${rows[0].id};`;
 
     data.message = 'success to send wa';
     data.status = 'success';
