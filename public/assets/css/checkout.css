@@ -17,83 +17,32 @@ body {
   min-height: 100vh;
 }
 
-nav.navbar {
-  height: 56px;
-  background: var(--white);
-  border-bottom: 1px solid var(--gray-200);
-  display: flex;
-  align-items: center;
-  padding: 0 32px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-  justify-content: space-between;
-}
-
 .profile-chip-wrapper {
   position: relative;
-}
-
-.nav-profile-chip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 8px 3px 3px;
-  border-radius: 99px;
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  transition: background 0.2s, border-color 0.2s;
-  color: var(--black);
-  cursor: pointer;
-  user-select: none;
-}
-
-.profile-chip-wrapper:hover .nav-profile-chip {
-  border-color: var(--gray-400);
-  background: var(--gray-100);
-}
-
-.nav-profile-avatar {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #111 0%, #444 100%);
-  color: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 10px;
-  letter-spacing: 0.3px;
-  flex-shrink: 0;
-}
-
-.nav-profile-name {
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100px;
 }
 
 .profile-dropdown {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  width: 210px;
+  width: 220px;
+  max-width: calc(100vw - 32px);
   background: var(--white);
   border: 1px solid var(--gray-200);
   border-radius: 10px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
   opacity: 0;
   visibility: hidden;
   transform: translateY(-6px);
-  transition: all 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease,
+    transform 0.2s ease;
   z-index: 300;
   overflow: hidden;
-  padding: 4px 0;
+  padding: 6px;
 }
 
 .profile-chip-wrapper:hover .profile-dropdown {
@@ -102,16 +51,28 @@ nav.navbar {
   transform: translateY(0);
 }
 
-.profile-dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 16px;
+.profile-dropdown a {
   font-size: 13px;
   font-weight: 500;
   color: var(--gray-700);
   text-decoration: none;
-  transition: background 0.15s;
+}
+
+.profile-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-700);
+  text-decoration: none;
+  border-radius: 6px;
+  transition:
+    background 0.15s,
+    color 0.15s;
+  cursor: pointer;
+  box-sizing: border-box;
 }
 
 .profile-dropdown-item:hover {
@@ -119,22 +80,22 @@ nav.navbar {
   color: var(--black);
 }
 
+.profile-dropdown-item svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--gray-600);
+  transition: color 0.15s;
+}
+
+.profile-dropdown-item:hover svg {
+  color: var(--black);
+}
+
 .profile-dropdown-divider {
   height: 1px;
   background: var(--gray-200);
-  margin: 4px 0;
-}
-
-.nav-logo {
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  color: var(--black);
-  text-decoration: none;
-}
-
-.nav-logo span {
-  color: var(--gray-400);
+  margin: 6px 0;
 }
 
 .container {
@@ -264,8 +225,9 @@ nav.navbar {
 
 .bank-item.selected {
   border-color: var(--black);
-  background: #fdfdfd;
+  background: var(--gray-100);
 }
+
 
 .bank-name {
   font-weight: 600;
@@ -336,6 +298,8 @@ nav.navbar {
   border-radius: 6px;
   font-size: 13px;
   font-family: var(--font);
+  color: var(--black);
+  background: var(--white);
   outline: none;
 }
 
@@ -401,7 +365,9 @@ nav.navbar {
   text-align: center;
   cursor: pointer;
   margin-top: 24px;
-  transition: background var(--transition), transform 0.1s ease;
+  transition:
+    background var(--transition),
+    transform 0.1s ease;
 }
 
 .btn-checkout:hover {
@@ -441,7 +407,9 @@ nav.navbar {
   gap: 10px;
   transform: translateY(100px);
   opacity: 0;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  transition:
+    transform 0.4s ease,
+    opacity 0.4s ease;
 }
 
 .toast.show {
@@ -463,7 +431,9 @@ nav.navbar {
   z-index: 300;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -521,8 +491,15 @@ nav.navbar {
   border-radius: 6px;
   font-size: 14px;
   font-family: var(--font);
+  color: var(--black);
+  background: var(--white);
   outline: none;
   transition: border-color 0.2s;
+}
+
+.auth-input::placeholder,
+.voucher-input::placeholder {
+  color: var(--gray-500);
 }
 
 .auth-input:focus {
@@ -545,7 +522,7 @@ nav.navbar {
 }
 
 .auth-submit-btn:hover {
-  background: #333;
+  opacity: 0.9;
 }
 
 .auth-submit-btn:active {
@@ -638,7 +615,7 @@ nav.navbar {
 .customer-info-row svg {
   width: 14px;
   height: 14px;
-  stroke: var(--gray-400);
+  stroke: var(--gray-500);
   flex-shrink: 0;
 }
 
@@ -696,7 +673,7 @@ nav.navbar {
 .auth-input-wrap .input-icon svg {
   width: 16px;
   height: 16px;
-  stroke: var(--gray-400);
+  stroke: var(--gray-500);
 }
 
 .auth-input-wrap .auth-input {
@@ -777,12 +754,15 @@ nav.navbar {
   overflow: hidden;
   text-decoration: none;
   color: var(--black);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
 
 .upsell-section .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
   border-color: var(--gray-300);
 }
 
@@ -891,7 +871,9 @@ nav.navbar {
   align-items: center;
   justify-content: center;
   gap: 5px;
-  transition: background 0.2s ease, transform 0.15s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
 }
 
 .upsell-section .btn-beli:hover {
@@ -924,7 +906,10 @@ nav.navbar {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.15s ease;
 }
 
 .upsell-section .btn-keranjang:hover {
@@ -1222,6 +1207,8 @@ nav.navbar {
   .auth-modal {
     width: 95vw;
     max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   .auth-title {

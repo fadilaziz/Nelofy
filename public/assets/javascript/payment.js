@@ -76,6 +76,9 @@
     let countdownInterval = null;
 
     function startCountdown(expiresAt) {
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+      }
       const target = new Date(expiresAt).getTime();
 
       function update() {
@@ -143,6 +146,18 @@
         banner.querySelector('.status-banner-icon').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
         orderBadgeText.textContent = 'LUNAS';
         document.getElementById('countdown-section').style.display = 'none';
+        
+        // Fix layout so it doesn't look messy/empty when the countdown is hidden
+        const quickInfo = document.querySelector('.payment-quick-info');
+        if (quickInfo) {
+          quickInfo.style.justifyContent = 'center';
+        }
+        
+        // Hide the QRIS / Bank Transfer instructions to clean up the page
+        const instructionsBlock = document.getElementById('payment-instructions-block');
+        if (instructionsBlock) {
+          instructionsBlock.style.display = 'none';
+        }
       }
     }
 
@@ -166,10 +181,18 @@
       }
       updateStatusBanner(status);
 
+      // Stop polling if status is no longer pending
+      if (status !== 'pending' && window.checkPaymentStatus) {
+        clearInterval(window.checkPaymentStatus);
+      }
+
       // Countdown
       if (status === 'pending') {
         startCountdown(d.jatuh_tempo || d.expired_at);
       } else {
+        if (countdownInterval) {
+          clearInterval(countdownInterval);
+        }
         document.getElementById('countdown-section').style.display = 'none';
       }
 
@@ -256,8 +279,9 @@
 
       document.getElementById('val-grand-total').textContent = formatRupiah(d.total_tagihan || d.total_amount);
 
-      if (status !== 'pending') {
-        document.getElementById('btn-confirm-payment').style.display = 'none';
+      const btnConfirm = document.getElementById('btn-confirm-payment');
+      if (btnConfirm && status !== 'pending') {
+        btnConfirm.style.display = 'none';
       }
     }
 
@@ -300,7 +324,7 @@
 
       try {
         const baseUrl = localStorage.getItem("base_url_api")
-        const response = await fetch(`${baseUrl}/payment_products`, {
+        const response = await fetch(`${baseUrl}/payment/payment_products`, {
           method: 'POST',
           credentials: 'include',
           headers: {
@@ -318,24 +342,26 @@
 
         if (result.code === 200 && result.data && result.data.length > 0) {
           loadingEl.style.display = 'none';
+          errorEl.style.display = 'none';
           contentEl.style.display = 'block';
           renderPayment(result.data[0]);
         } else {
           loadingEl.style.display = 'none';
+          contentEl.style.display = 'none';
           errorEl.style.display = 'block';
           document.getElementById('error-message').textContent = 'Data pembayaran tidak ditemukan untuk order #' + rawOrderId;
         }
       } catch (error) {
         console.error('Gagal memuat data pembayaran:', error);
         loadingEl.style.display = 'none';
+        contentEl.style.display = 'none';
         errorEl.style.display = 'block';
         document.getElementById('error-message').textContent = 'Terjadi kesalahan saat memuat data. Silakan coba lagi.';
       }
     }
 
     //Polling check status pembayaran setiap 3 detik 
-    const checkPaymentStatus = setInterval(() => {
-      
+    window.checkPaymentStatus = setInterval(() => {
       loadPaymentData();
     }, 3000); 
 

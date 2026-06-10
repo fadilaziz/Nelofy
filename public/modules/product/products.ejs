@@ -1,36 +1,41 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nelofy | Digital Product E-commerce</title>
-  <meta name="description" content="Tingkatkan skill dengan kelas online berkualitas. Belajar web development, backend, frontend, dan database bersama instruktur terbaik." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script>
-    //Set base_url_api
-    localStorage.setItem("base_url_api", "<%= process.env.BASE_API_URL %>");
-  </script>
-  <link rel="icon" href="../../assets/favicon.png">
-  <link rel="stylesheet" href="../../assets/css/global.css">
-  <link rel="stylesheet" href="../../assets/css/products.css">
-  <script defer src="../../assets/javascript/global.js"></script>
-  <script defer src="../../assets/javascript/navbar.js"></script>
-  <script defer src="../../assets/javascript/product.js"></script>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nelofy | Digital Product E-commerce</title>
+    <meta
+      name="description"
+      content="Tingkatkan skill dengan kelas online berkualitas. Belajar web development, backend, frontend, dan database bersama instruktur terbaik."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      //Set base_url_api
+      localStorage.setItem('base_url_api', '<%= process.env.BASE_API_URL %>');
+    </script>
+    <link rel="stylesheet" href="../../assets/css/global.css" />
+    <link rel="stylesheet" href="../../assets/css/navbar.css" />
+    <link rel="stylesheet" href="../../assets/css/products.css" />
+    <script defer src="../../assets/javascript/global.js"></script>
+    <script defer src="../../assets/javascript/navbar.js"></script>
+    <script defer src="../../assets/javascript/product.js"></script>
+  </head>
 
-  <!-- ─── TOP ANNOUNCEMENT BAR ─── -->
-  <div id="topbar"></div>
+  <body>
+    <!-- ─── TOP ANNOUNCEMENT BAR ─── -->
+    <div id="topbar"></div>
 
-  <!-- ─── NAVBAR ─── -->
-  <nav class="navbar"></nav>
+    <!-- ─── NAVBAR ─── -->
+    <nav class="navbar"></nav>
 
-  <!-- ─── MAIN CONTENT ─── -->
-  <div class="container">
-
-    <!-- PAGE HEADER
+    <!-- ─── MAIN CONTENT ─── -->
+    <div class="container">
+      <!-- PAGE HEADER
     <div class="page-header">
       <h1>Modul Pilihan</h1>
       <div class="result-meta">
@@ -38,124 +43,171 @@
         <div class="result-count">— 5 tersedia</div>
       </div>
     </div> -->
-  </div> <!-- /container -->
+    </div>
+    <!-- /container -->
 
-  
+    <!-- ─── FILTER BAR ─── -->
+    <div class="filter-section">
+      <div class="container">
+        <div class="filter-bar">
+          <span class="filter-label" id="total-product"></span>
+          <span class="filter-spacer"></span>
 
-  <!-- ─── FILTER BAR ─── -->
-  <div class="filter-section">
-    <div class="container">
-      <div class="filter-bar">
-        <span class="filter-label" id="total-product"></span>
-        <span class="filter-spacer"></span>
+          <!--SEARCH BAR-->
+          <div class="search-wrapper">
+            <svg
+              class="search-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              type="search"
+              id="product-search"
+              class="search-input"
+              placeholder="Cari modul"
+              autocomplete="off"
+            />
+          </div>
 
-        <!--SEARCH BAR-->
-        <div class="search-wrapper">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"/>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-          <input type="search" id="product-search" class="search-input" placeholder="Cari modul" autocomplete="off">
+          <button class="filter-open-btn" id="filter-open-btn" onclick="openSidebarFilter()">
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <line x1="4" y1="6" x2="20" y2="6" />
+              <line x1="4" y1="12" x2="20" y2="12" />
+              <line x1="4" y1="18" x2="20" y2="18" />
+            </svg>
+            Filter
+          </button>
+
+          <select class="sort-select">
+            <option>Terbaru</option>
+            <option>Harga: Rendah ke Tinggi</option>
+            <option>Harga: Tinggi ke Rendah</option>
+            <option>Paling Populer</option>
+            <option>Nama: A–Z</option>
+          </select>
         </div>
-
-      <button class="filter-open-btn" id="filter-open-btn" onclick="openSidebarFilter()">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <line x1="4" y1="6"  x2="20" y2="6"/>
-          <line x1="4" y1="12" x2="20" y2="12"/>
-          <line x1="4" y1="18" x2="20" y2="18"/>
-        </svg>
-        Filter
-      </button>
-
-      <select class="sort-select">
-        <option>Terbaru</option>
-        <option>Harga: Rendah ke Tinggi</option>
-        <option>Harga: Tinggi ke Rendah</option>
-        <option>Paling Populer</option>
-        <option>Nama: A–Z</option>
-      </select>
       </div>
     </div>
-  </div>
 
-  <!-- ─── PRODUCT GRID & SIDEBAR ─── -->
-  <div class="container main-layout">
-    
-    <!-- SIDEBAR -->
-    <aside class="sidebar-filter" id="sidebar-filter">
-       <div class="sidebar-header">
-         <h3>Filter</h3>
-         <button class="sidebar-close-btn" onclick="closeSidebarFilter()">
-           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-         </button>
-       </div>
+    <!-- ─── PRODUCT GRID & SIDEBAR ─── -->
+    <div class="container main-layout">
+      <!-- SIDEBAR -->
+      <aside class="sidebar-filter" id="sidebar-filter">
+        <div class="sidebar-header">
+          <h3>Filter</h3>
+          <button class="sidebar-close-btn" onclick="closeSidebarFilter()">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
 
-       <div class="sidebar-block">
-         <h4 class="sidebar-title">Kategori</h4>
-         <label class="sidebar-check">
-           <input type="checkbox" class="kategori-check" data-value="semua" checked> Semua
-         </label>
-         <label class="sidebar-check">
-           <input type="checkbox" class="kategori-check" data-value="Web Development"> Web Development
-         </label>
-         <label class="sidebar-check">
-           <input type="checkbox" class="kategori-check" data-value="Data Science"> Data Science
-         </label>
-         <label class="sidebar-check">
-           <input type="checkbox" class="kategori-check" data-value="UI/UX Design"> UI/UX Design
-         </label>
-         <label class="sidebar-check">
-           <input type="checkbox" class="kategori-check" data-value="Digital Marketing"> Digital Marketing
-         </label>
-       </div>
+        <div class="sidebar-block">
+          <h4 class="sidebar-title">Kategori</h4>
+          <label class="sidebar-check">
+            <input type="checkbox" class="kategori-check" data-value="semua" checked /> Semua
+          </label>
+          <label class="sidebar-check">
+            <input type="checkbox" class="kategori-check" data-value="Web Development" /> Web
+            Development
+          </label>
+          <label class="sidebar-check">
+            <input type="checkbox" class="kategori-check" data-value="Data Science" /> Data Science
+          </label>
+          <label class="sidebar-check">
+            <input type="checkbox" class="kategori-check" data-value="UI/UX Design" /> UI/UX Design
+          </label>
+          <label class="sidebar-check">
+            <input type="checkbox" class="kategori-check" data-value="Digital Marketing" /> Digital
+            Marketing
+          </label>
+        </div>
 
-       <div class="sidebar-block">
-         <h4 class="sidebar-title">Tingkat</h4>
-         <label class="sidebar-check">
-           <input type="checkbox" class="tingkat-check" data-value="semua" checked> Semua Tingkat
-         </label>
-         <label class="sidebar-check">
-           <input type="checkbox" class="tingkat-check" data-value="Pemula"> Pemula
-         </label>
-         <label class="sidebar-check">
-           <input type="checkbox" class="tingkat-check" data-value="Menengah"> Menengah
-         </label>
-         <label class="sidebar-check">
-           <input type="checkbox" class="tingkat-check" data-value="Lanjut"> Lanjut
-         </label>
-       </div>
+        <div class="sidebar-block">
+          <h4 class="sidebar-title">Tingkat</h4>
+          <label class="sidebar-check">
+            <input type="checkbox" class="tingkat-check" data-value="semua" checked /> Semua Tingkat
+          </label>
+          <label class="sidebar-check">
+            <input type="checkbox" class="tingkat-check" data-value="Pemula" /> Pemula
+          </label>
+          <label class="sidebar-check">
+            <input type="checkbox" class="tingkat-check" data-value="Menengah" /> Menengah
+          </label>
+          <label class="sidebar-check">
+            <input type="checkbox" class="tingkat-check" data-value="Lanjut" /> Lanjut
+          </label>
+        </div>
 
-       <div class="sidebar-block" style="border-bottom: none; padding-top: 8px;">
-         <button id="sidebar-reset-btn" style="width:100%;padding:10px;background:transparent;border:1px solid var(--gray-300);border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-600);cursor:pointer;font-family:var(--font);transition:all 0.2s ease;">
-           Reset Filter
-         </button>
-       </div>
-    </aside>
+        <div class="sidebar-block" style="border-bottom: none; padding-top: 8px">
+          <button
+            id="sidebar-reset-btn"
+            style="
+              width: 100%;
+              padding: 10px;
+              background: transparent;
+              border: 1px solid var(--gray-300);
+              border-radius: 8px;
+              font-size: 13px;
+              font-weight: 600;
+              color: var(--gray-600);
+              cursor: pointer;
+              font-family: var(--font);
+              transition: all 0.2s ease;
+            "
+          >
+            Reset Filter
+          </button>
+        </div>
+      </aside>
 
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebarFilter()"></div>
+      <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebarFilter()"></div>
 
-    <!-- MAIN CONTENT -->
-    <section class="products-section">
-      <div class="product-grid" id="product-container">
-        <!--Card products-->
-      </div>
+      <!-- MAIN CONTENT -->
+      <section class="products-section">
+        <div class="product-grid" id="product-container">
+          <!--Card products-->
+        </div>
 
-      <!-- PAGINATION -->
-      <div class="pagination">
-        <a href="#" class="page-btn disabled">‹</a>
-        <a href="#" class="page-btn active">1</a>
-        <a href="#" class="page-btn disabled">›</a>
-      </div>
-    </section>
+        <!-- PAGINATION -->
+        <div class="pagination">
+          <a href="#" class="page-btn disabled">‹</a>
+          <a href="#" class="page-btn active">1</a>
+          <a href="#" class="page-btn disabled">›</a>
+        </div>
+      </section>
+    </div>
+    <!-- /container -->
 
-  </div><!-- /container -->
-
-  <!-- ─── FOOTER ─── -->
-  <footer class="footer">
-    <div class="footer-container">
-      
-      <!-- Newsletter Section -->
-      <!-- <div class="footer-newsletter">
+    <!-- ─── FOOTER ─── -->
+    <footer class="footer">
+      <div class="footer-container">
+        <!-- Newsletter Section -->
+        <!-- <div class="footer-newsletter">
         <div class="newsletter-text">
           <h3>Bergabung dengan Newsletter</h3>
           <p>Dapatkan update kelas terbaru dan penawaran spesial langsung di email Anda.</p>
@@ -166,464 +218,873 @@
         </form>
       </div> -->
 
-      <div class="footer-top">
-        <div class="footer-brand">
-          <a href="/" class="logo">Nelo<span>fy</span></a>
-          <p>Platform pembelajaran online terpercaya untuk mengasah keahlian digital masa depan Anda. Belajar kapan saja, di mana saja.</p>
-          <div class="footer-socials">
-            <a href="#" class="social-btn" title="Instagram">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            </a>
-            <a href="#" class="social-btn" title="Twitter">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
-            </a>
-            <a href="#" class="social-btn" title="Facebook">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-            </a>
-            <a href="#" class="social-btn" title="LinkedIn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a href="/" class="logo">Nelo<span>fy</span></a>
+            <p>
+              Platform pembelajaran online terpercaya untuk mengasah keahlian digital masa depan
+              Anda. Belajar kapan saja, di mana saja.
+            </p>
+            <div class="footer-socials">
+              <a href="#" class="social-btn" title="Instagram">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+              </a>
+              <a href="#" class="social-btn" title="Twitter">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="social-btn" title="Facebook">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                </svg>
+              </a>
+              <a href="#" class="social-btn" title="LinkedIn">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                  />
+                  <rect x="2" y="9" width="4" height="12" />
+                  <circle cx="4" cy="4" r="2" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4>Produk</h4>
+            <ul class="footer-links">
+              <li><a href="#">Semua Modul</a></li>
+              <li><a href="#">Kelas Bootcamp</a></li>
+              <li><a href="#">E-Book Gratis</a></li>
+              <li><a href="#">Sertifikasi</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Bantuan</h4>
+            <ul class="footer-links">
+              <li><a href="#">Pusat Bantuan</a></li>
+              <li><a href="#">Cara Pembayaran</a></li>
+              <li><a href="#">Kebijakan Refund</a></li>
+              <li><a href="#">Hubungi Kami</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Tentang</h4>
+            <ul class="footer-links">
+              <li><a href="#">Visi & Misi</a></li>
+              <li><a href="#">Tim Kami</a></li>
+              <li><a href="#">Karir</a></li>
+              <li><a href="#">Syarat & Ketentuan</a></li>
+            </ul>
           </div>
         </div>
 
-        <div class="footer-col">
-          <h4>Produk</h4>
-          <ul class="footer-links">
-            <li><a href="#">Semua Modul</a></li>
-            <li><a href="#">Kelas Bootcamp</a></li>
-            <li><a href="#">E-Book Gratis</a></li>
-            <li><a href="#">Sertifikasi</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>Bantuan</h4>
-          <ul class="footer-links">
-            <li><a href="#">Pusat Bantuan</a></li>
-            <li><a href="#">Cara Pembayaran</a></li>
-            <li><a href="#">Kebijakan Refund</a></li>
-            <li><a href="#">Hubungi Kami</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>Tentang</h4>
-          <ul class="footer-links">
-            <li><a href="#">Visi & Misi</a></li>
-            <li><a href="#">Tim Kami</a></li>
-            <li><a href="#">Karir</a></li>
-            <li><a href="#">Syarat & Ketentuan</a></li>
-          </ul>
+        <div class="footer-bottom">
+          <p>&copy; 2026 Nelofy. Seluruh hak cipta dilindungi.</p>
+          <div class="footer-payment-icons">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg"
+              height="12"
+              alt="BCA"
+            />
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/2/2e/BRI_2020.svg"
+              height="12"
+              alt="BRI"
+            />
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Bank_Negara_Indonesia_logo_%282004%29.svg"
+              height="12"
+              alt="BNI"
+            />
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg"
+              height="12"
+              alt="QRIS"
+              class="qris-footer-icon"
+            />
+          </div>
         </div>
       </div>
+    </footer>
 
-      <div class="footer-bottom">
-        <p>&copy; 2026 Nelofy. Seluruh hak cipta dilindungi.</p>
-        <div class="footer-payment-icons">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" height="12" alt="BCA">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/BRI_2020.svg" height="12" alt="BRI">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Bank_Negara_Indonesia_logo_%282004%29.svg" height="12" alt="BNI">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg" height="12" alt="QRIS" class="qris-footer-icon">
-        </div>
-      </div>
-    </div>
-  </footer>
+    <!-- ─── CART SIDEBAR ─── -->
+    <div class="cart-overlay" id="cart-overlay"></div>
 
-  <!-- ─── CART SIDEBAR ─── -->
-  <div class="cart-overlay" id="cart-overlay"></div>
-
-  <aside class="cart-sidebar" id="cart-sidebar" aria-label="Keranjang Belanja">
-    <!-- Header -->
-    <div class="cart-sidebar-header">
-      <div class="cart-sidebar-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
-        </svg>
-        Keranjang
-      </div>
-      <button class="cart-sidebar-close" id="cart-close-btn" title="Tutup">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-    </div>
-
-    <!-- Item list -->
-    <div class="cart-sidebar-body" id="cart-sidebar-body"></div>
-
-    <!-- Footer -->
-    <div class="cart-sidebar-footer" id="cart-sidebar-footer" style="display:none;">
-      <div class="cart-subtotal">
-        <span class="cart-subtotal-label">Subtotal</span>
-        <span class="cart-subtotal-value" id="cart-subtotal-value">Rp 0</span>
-      </div>
-      <a href="/checkout" class="btn-checkout">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        Lanjut ke Checkout
-      </a>
-      <button class="btn-clear-cart" id="cart-clear-btn">Kosongkan keranjang</button>
-    </div>
-  </aside>
-
-  <!-- ─── AUTH MODAL ─── -->
-  <div class="auth-overlay" id="auth-overlay">
-    <div class="auth-modal">
-      <button class="auth-close-btn" id="auth-close-btn">&times;</button>
-      
-      <!-- Register Panel -->
-      <div class="auth-panel" id="register-panel">
-        <h2 class="auth-title">Nelo<span>fy</span></h2>
-        <p>Silahkan masukan data untuk membuat akun</p>
-        <div class="auth-form-group">
-          <input type="text" class="auth-input" id="reg-fullname" placeholder="Full Name" required>
-        </div>
-        <div class="auth-form-group">
-          <input type="text" class="auth-input" id="reg-username" placeholder="Username" required>
-        </div>
-        <div class="auth-form-group">
-          <input type="email" class="auth-input" id="reg-email" placeholder="Email" required>
-        </div>
-        <div class="auth-form-group">
-          <input type="password" class="auth-input" id="reg-pass" placeholder="Password" required>
-        </div>
-        <div class="auth-form-group">
-          <input type="tel" class="auth-input" id="reg-phone" placeholder="Phone Number" required>
-        </div>
-        <button class="auth-submit-btn" id="btn-register" onclick="register()">Registrasi</button>
-
-         <div class="auth-divider">atau</div>
-
-        <a class="auth-google-btn" id="btn-google-login" href="https://e10b-180-254-122-151.ngrok-free.app/auth/google">
-          <svg viewBox="0 0 48 48" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
-            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-            <path fill="none" d="M0 0h48v48H0z"/>
-          </svg>
-          Registrasi dengan Google
-        </a>
-        <div class="auth-switch">
-          Sudah punya akun? <a href="#" id="switch-to-login">Masuk disini</a>
-        </div>
-      </div>
-
-      <!-- Login Panel -->
-      <div class="auth-panel" id="login-panel">
-        <h2 class="auth-title">Nelo<span>fy</span></h2>
-        <p>Silahkan masukan email dan password kamu untuk masuk ke akun kamu</p>
-        <div class="auth-form-group">
-          <input type="email" class="auth-input" id="login-email" placeholder="Email" required>
-        </div>
-        <div class="auth-form-group">
-          <input type="password" class="auth-input" id="login-pass" placeholder="Password" required>
-        </div>
-        <a href="#" id="lupa-password" onclick="openForgotPasswordModal(event)">Lupa Password ?</a>
-        <button class="auth-submit-btn" id="btn-login" onclick="login()">Masuk</button>
-
-        <div class="auth-divider">atau</div>
-
-        <a class="auth-google-btn" id="btn-google-login" href="https://e10b-180-254-122-151.ngrok-free.app/auth/google">
-          <svg viewBox="0 0 48 48" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
-            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-            <path fill="none" d="M0 0h48v48H0z"/>
-          </svg>
-          Masuk dengan Google
-        </a>
-
-        <div class="auth-switch">
-          Belum punya akun? <a href="#" id="switch-to-register">Daftar sekarang</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ─── TOAST CONTAINER ─── -->
-  <div id="toast-container" class="toast-container"></div>
-
-  <!-- ─── CONFIRM MODAL ─── -->
-  <div class="confirm-overlay" id="confirm-overlay">
-    <div class="confirm-modal">
-      <div class="confirm-title" id="confirm-title">Konfirmasi</div>
-      <div class="confirm-message" id="confirm-message">Apakah Anda yakin?</div>
-      <div class="confirm-actions">
-        <button class="btn-confirm-cancel" id="confirm-cancel-btn">Batal</button>
-        <button class="btn-confirm-ok" id="confirm-ok-btn">Ya, Yakin</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ─── HELP MODAL ─── -->
-  <div class="help-overlay" id="help-overlay" onclick="closeHelpModalOnBackdrop(event)">
-    <div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
-
+    <aside class="cart-sidebar" id="cart-sidebar" aria-label="Keranjang Belanja">
       <!-- Header -->
-      <div class="help-modal-header">
-        <div class="help-modal-title" id="help-modal-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+      <div class="cart-sidebar-header">
+        <div class="cart-sidebar-title">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
           </svg>
-          Pusat Bantuan
+          Keranjang
         </div>
-        <button class="help-modal-close" onclick="closeHelpModal()" aria-label="Tutup">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        <button class="cart-sidebar-close" id="cart-close-btn" title="Tutup">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
       </div>
 
-      <!-- Body -->
-      <div class="help-modal-body">
+      <!-- Item list -->
+      <div class="cart-sidebar-body" id="cart-sidebar-body"></div>
 
-        <!-- Info hint -->
-        <div class="help-search-hint">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      <!-- Footer -->
+      <div class="cart-sidebar-footer" id="cart-sidebar-footer" style="display: none">
+        <div class="cart-subtotal">
+          <span class="cart-subtotal-label">Subtotal</span>
+          <span class="cart-subtotal-value" id="cart-subtotal-value">Rp 0</span>
+        </div>
+        <a href="/checkout" class="btn-checkout">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
-          <span>Temukan jawaban atas pertanyaan umum di bawah ini, atau hubungi tim kami secara langsung jika membutuhkan bantuan lebih lanjut.</span>
-        </div>
+          Lanjut ke Checkout
+        </a>
+        <button class="btn-clear-cart" id="cart-clear-btn">Kosongkan keranjang</button>
+      </div>
+    </aside>
 
-        <!-- FAQ -->
-        <div>
-          <div class="help-section-title">Pertanyaan Umum</div>
-          <div class="help-faq">
-
-            <div class="help-faq-item">
-              <button class="help-faq-q" onclick="toggleFaq(this)">
-                Bagaimana cara membeli modul?
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div class="help-faq-a">Pilih modul yang kamu inginkan, klik tombol <strong>Beli Sekarang</strong>, lalu selesaikan pembayaran. Akses modul akan aktif otomatis setelah pembayaran terkonfirmasi.</div>
-            </div>
-
-            <div class="help-faq-item">
-              <button class="help-faq-q" onclick="toggleFaq(this)">
-                Metode pembayaran apa saja yang tersedia?
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div class="help-faq-a">Kami mendukung berbagai metode pembayaran: transfer bank (BCA, Mandiri, BNI, BRI), dompet digital (QRIS, GoPay, OVO, Dana), dan kartu kredit/debit.</div>
-            </div>
-
-            <div class="help-faq-item">
-              <button class="help-faq-q" onclick="toggleFaq(this)">
-                Apakah ada masa berlaku akses modul?
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div class="help-faq-a">Akses modul bersifat <strong>lifetime</strong> — sekali beli, bisa diakses selamanya termasuk update konten di masa mendatang.</div>
-            </div>
-
-            <div class="help-faq-item">
-              <button class="help-faq-q" onclick="toggleFaq(this)">
-                Bagaimana jika pembayaran saya tidak terproses?
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div class="help-faq-a">Cek status transaksi di halaman <strong>Riwayat Pembelian</strong> di profil kamu. Jika saldo terpotong namun status masih pending lebih dari 30 menit, hubungi kami via WhatsApp atau email.</div>
-            </div>
-
-            <div class="help-faq-item">
-              <button class="help-faq-q" onclick="toggleFaq(this)">
-                Bagaimana cara mendapatkan diskon 10%?
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div class="help-faq-a">Diskon 10% diberikan otomatis untuk pembelian pertama setelah kamu mendaftar dan login ke akun Nelofy. Tidak perlu kode promo.</div>
-            </div>
-
+    <!-- ─── PRODUCT DETAIL MODAL ─── -->
+    <div
+      class="product-modal-overlay"
+      id="product-modal-overlay"
+      onclick="if (event.target === this) closeProductModal();"
+    >
+      <div class="product-modal" id="product-modal">
+        <button class="product-modal-close" onclick="closeProductModal()" title="Tutup">
+          &times;
+        </button>
+        <div class="product-modal-content">
+          <div class="product-modal-img-wrap">
+            <img src="" id="pm-img" alt="" />
+          </div>
+          <div class="product-modal-info">
+            <h2 class="pm-title" id="pm-title"></h2>
+            <div class="pm-type" id="pm-type"></div>
+            <div class="pm-price" id="pm-price"></div>
+            <div class="pm-desc" id="pm-desc"></div>
+            <button class="pm-buy-btn" id="pm-buy-btn">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+              Beli Sekarang
+            </button>
           </div>
         </div>
-
-        <!-- Kontak -->
-        <div>
-          <div class="help-section-title">Hubungi Kami</div>
-          <div class="help-contact-list">
-
-            <a href="https://wa.me/6281234567890" target="_blank" rel="noopener" class="help-contact-item">
-              <div class="help-contact-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
-                </svg>
-              </div>
-              <div class="help-contact-info">
-                <div class="help-contact-label">WhatsApp</div>
-                <div class="help-contact-sub">Respons cepat — Senin s/d Sabtu, 08.00–17.00 WIB</div>
-              </div>
-              <div class="help-contact-arrow">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-              </div>
-            </a>
-
-            <a href="mailto:support@nelofy.id" class="help-contact-item">
-              <div class="help-contact-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
-                </svg>
-              </div>
-              <div class="help-contact-info">
-                <div class="help-contact-label">Email</div>
-                <div class="help-contact-sub">support@nelofy.id</div>
-              </div>
-              <div class="help-contact-arrow">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-              </div>
-            </a>
-
-          </div>
-        </div>
-
       </div>
     </div>
-  </div>
 
-  <!-- ─── LUPA PASSWORD MODAL ─── -->
-  <div class="auth-overlay" id="forgot-password-overlay" onclick="if(event.target === this) closeForgotPasswordModal()" style="display: none; align-items: center; justify-content: center; z-index: 10000; position: fixed; inset: 0; background: rgba(0,0,0,0.5);">
-    <div class="auth-panel" style="display: block; position: relative; max-width: 400px; width: 90%; padding: 32px 24px; text-align: center;">
-      <button onclick="closeForgotPasswordModal()" style="position: absolute; right: 16px; top: 16px; background: none; border: none; cursor: pointer; color: #555;">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 6L6 18" />
-          <path d="M6 6l12 12" />
+    <!-- ─── AUTH MODAL ─── -->
+    <div class="auth-overlay" id="auth-overlay">
+      <div class="auth-modal">
+        <button class="auth-close-btn" id="auth-close-btn">&times;</button>
+
+        <!-- Register Panel -->
+        <div class="auth-panel" id="register-panel">
+          <h2 class="auth-title">Nelo<span>fy</span></h2>
+          <p>Silahkan masukan data untuk membuat akun</p>
+          <div class="auth-input-wrapper">
+            <span class="auth-input-prefix">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <input type="text" class="auth-input" id="reg-fullname" placeholder="Full Name" required />
+          </div>
+          <div class="auth-input-wrapper">
+            <span class="auth-input-prefix">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </span>
+            <input type="text" class="auth-input" id="reg-username" placeholder="Username" required />
+          </div>
+          <div class="auth-input-wrapper">
+            <span class="auth-input-prefix">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+            </span>
+            <input type="email" class="auth-input" id="reg-email" placeholder="Email" required />
+          </div>
+          <div class="auth-input-wrapper">
+            <span class="auth-input-prefix">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <input type="password" class="auth-input" id="reg-pass" placeholder="Password" required />
+          </div>
+          <div class="auth-input-wrapper">
+            <span class="auth-input-prefix">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </span>
+            <input type="tel" class="auth-input" id="reg-phone" placeholder="Phone Number" required />
+          </div>
+          <button class="auth-submit-btn" id="btn-register" onclick="register()">Registrasi</button>
+
+          <!-- <div class="auth-divider">atau</div> -->
+
+          <!-- <a
+            class="auth-google-btn"
+            id="btn-google-login"
+            href="<%= process.env.BASE_API_URL %>/auth/google"
+          >
+            <svg viewBox="0 0 48 48" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+              <path
+                fill="#EA4335"
+                d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+              />
+              <path
+                fill="#4285F4"
+                d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+              />
+              <path
+                fill="#FBBC05"
+                d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+              />
+              <path
+                fill="#34A853"
+                d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+              />
+              <path fill="none" d="M0 0h48v48H0z" />
+            </svg>
+            Registrasi dengan Google
+          </a> -->
+          <div class="auth-switch">
+            Sudah punya akun? <a href="#" id="switch-to-login">Masuk disini</a>
+          </div>
+        </div>
+
+        <!-- Login Panel -->
+        <div class="auth-panel" id="login-panel">
+          <h2 class="auth-title">Nelo<span>fy</span></h2>
+          <p>Silahkan masukan email dan password kamu untuk masuk ke akun kamu</p>
+          <div class="auth-input-wrapper">
+            <span class="auth-input-prefix">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+            </span>
+            <input type="email" class="auth-input" id="login-email" placeholder="Email" required />
+          </div>
+          <div class="auth-input-wrapper">
+            <span class="auth-input-prefix">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <input type="password" class="auth-input" id="login-pass" placeholder="Password" required />
+            <span class="auth-input-suffix" onclick="const p=document.getElementById('login-pass');const i=document.getElementById('login-eye-icon');if(p.type==='password'){p.type='text';i.innerHTML='<path d=\'M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22\'/>';}else{p.type='password';i.innerHTML='<path d=\'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\'/><circle cx=\'12\' cy=\'12\' r=\'3\'/>';}">
+              <svg id="login-eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </span>
+          </div>
+          <a href="#" id="lupa-password" onclick="openForgotPasswordModal(event)"
+            >Lupa Password ?</a
+          >
+          <button class="auth-submit-btn" id="btn-login" onclick="login()">Masuk</button>
+
+          <!-- <div class="auth-divider">atau</div> -->
+
+          <!-- <a
+            class="auth-google-btn"
+            id="btn-google-login"
+            href="<%= process.env.BASE_API_URL %>/auth/google"
+          >
+            <svg viewBox="0 0 48 48" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+              <path
+                fill="#EA4335"
+                d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+              />
+              <path
+                fill="#4285F4"
+                d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+              />
+              <path
+                fill="#FBBC05"
+                d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+              />
+              <path
+                fill="#34A853"
+                d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+              />
+              <path fill="none" d="M0 0h48v48H0z" />
+            </svg>
+            Masuk dengan Google
+          </a> -->
+
+          <div class="auth-switch">
+            Belum punya akun? <a href="#" id="switch-to-register">Daftar sekarang</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── TOAST CONTAINER ─── -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- ─── CONFIRM MODAL ─── -->
+    <div class="confirm-overlay" id="confirm-overlay">
+      <div class="confirm-modal">
+        <div class="confirm-title" id="confirm-title">Konfirmasi</div>
+        <div class="confirm-message" id="confirm-message">Apakah Anda yakin?</div>
+        <div class="confirm-actions">
+          <button class="btn-confirm-cancel" id="confirm-cancel-btn">Batal</button>
+          <button class="btn-confirm-ok" id="confirm-ok-btn">Ya, Yakin</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── HELP MODAL ─── -->
+    <div class="help-overlay" id="help-overlay" onclick="closeHelpModalOnBackdrop(event)">
+      <div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
+        <!-- Header -->
+        <div class="help-modal-header">
+          <div class="help-modal-title" id="help-modal-title">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            Pusat Bantuan
+          </div>
+          <button class="help-modal-close" onclick="closeHelpModal()" aria-label="Tutup">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Body -->
+        <div class="help-modal-body">
+          <!-- Info hint -->
+          <div class="help-search-hint">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            <span
+              >Temukan jawaban atas pertanyaan umum di bawah ini, atau hubungi tim kami secara
+              langsung jika membutuhkan bantuan lebih lanjut.</span
+            >
+          </div>
+
+          <!-- FAQ -->
+          <div>
+            <div class="help-section-title">Pertanyaan Umum</div>
+            <div class="help-faq">
+              <div class="help-faq-item">
+                <button class="help-faq-q" onclick="toggleFaq(this)">
+                  Bagaimana cara membeli modul?
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </button>
+                <div class="help-faq-a">
+                  Pilih modul yang kamu inginkan, klik tombol <strong>Beli Sekarang</strong>, lalu
+                  selesaikan pembayaran. Akses modul akan aktif otomatis setelah pembayaran
+                  terkonfirmasi.
+                </div>
+              </div>
+
+              <div class="help-faq-item">
+                <button class="help-faq-q" onclick="toggleFaq(this)">
+                  Metode pembayaran apa saja yang tersedia?
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </button>
+                <div class="help-faq-a">
+                  Kami mendukung berbagai metode pembayaran: transfer bank (BCA, Mandiri, BNI, BRI),
+                  dompet digital (QRIS, GoPay, OVO, Dana), dan kartu kredit/debit.
+                </div>
+              </div>
+
+              <div class="help-faq-item">
+                <button class="help-faq-q" onclick="toggleFaq(this)">
+                  Apakah ada masa berlaku akses modul?
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </button>
+                <div class="help-faq-a">
+                  Akses modul bersifat <strong>lifetime</strong> — sekali beli, bisa diakses
+                  selamanya termasuk update konten di masa mendatang.
+                </div>
+              </div>
+
+              <div class="help-faq-item">
+                <button class="help-faq-q" onclick="toggleFaq(this)">
+                  Bagaimana jika pembayaran saya tidak terproses?
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </button>
+                <div class="help-faq-a">
+                  Cek status transaksi di halaman <strong>Riwayat Pembelian</strong> di profil kamu.
+                  Jika saldo terpotong namun status masih pending lebih dari 30 menit, hubungi kami
+                  via WhatsApp atau email.
+                </div>
+              </div>
+
+              <div class="help-faq-item">
+                <button class="help-faq-q" onclick="toggleFaq(this)">
+                  Bagaimana cara mendapatkan diskon 10%?
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </button>
+                <div class="help-faq-a">
+                  Diskon 10% diberikan otomatis untuk pembelian pertama setelah kamu mendaftar dan
+                  login ke akun Nelofy. Tidak perlu kode promo.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kontak -->
+          <div>
+            <div class="help-section-title">Hubungi Kami</div>
+            <div class="help-contact-list">
+              <a
+                href="https://wa.me/6281234567890"
+                target="_blank"
+                rel="noopener"
+                class="help-contact-item"
+              >
+                <div class="help-contact-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
+                    />
+                  </svg>
+                </div>
+                <div class="help-contact-info">
+                  <div class="help-contact-label">WhatsApp</div>
+                  <div class="help-contact-sub">
+                    Respons cepat — Senin s/d Sabtu, 08.00–17.00 WIB
+                  </div>
+                </div>
+                <div class="help-contact-arrow">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </div>
+              </a>
+
+              <a href="mailto:support@nelofy.id" class="help-contact-item">
+                <div class="help-contact-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                    />
+                    <polyline points="22,6 12,13 2,6" />
+                  </svg>
+                </div>
+                <div class="help-contact-info">
+                  <div class="help-contact-label">Email</div>
+                  <div class="help-contact-sub">support@nelofy.id</div>
+                </div>
+                <div class="help-contact-arrow">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── LUPA PASSWORD MODAL ─── -->
+    <div
+      class="auth-overlay"
+      id="forgot-password-overlay"
+      onclick="if (event.target === this) closeForgotPasswordModal();"
+      style="
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+      "
+    >
+      <div
+        class="auth-panel"
+        style="
+          display: block;
+          position: relative;
+          max-width: 400px;
+          width: 90%;
+          padding: 32px 24px;
+          text-align: center;
+          background: white;
+        "
+      >
+        <button
+          onclick="closeForgotPasswordModal()"
+          style="
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #555;
+          "
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M18 6L6 18" />
+            <path d="M6 6l12 12" />
+          </svg>
+        </button>
+        <svg
+          width="48"
+          height="48"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          style="color: var(--black); margin-bottom: 16px"
+        >
+          <path
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+          />
         </svg>
-      </button>
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--black); margin-bottom: 16px;">
-        <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-      <h3 style="margin-bottom: 12px; font-size: 20px;">Lupa Password?</h3>
-      <p style="font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 24px;">
-        Masukkan email yang terdaftar pada akun Anda. Kami akan mengirimkan tautan untuk mereset password Anda.
-      </p>
-      <div class="auth-form-group">
-        <input type="email" class="auth-input" id="forgot-password-email-input" placeholder="Alamat Email" required>
-      </div>
-      <div style="display: flex; gap: 12px; margin-top: 24px;">
-        <button style="flex: 1; padding: 12px; background: white; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; font-weight: 600;" onclick="closeForgotPasswordModal()">Batal</button>
-        <button id="btn-submit-forgot" style="flex: 1; padding: 12px; background: #111; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;" onclick="submitForgotPassword()">Kirim</button>
+        <h3 style="margin-bottom: 12px; font-size: 20px">Lupa Password?</h3>
+        <p style="font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 24px">
+          Masukkan email yang terdaftar pada akun Anda. Kami akan mengirimkan tautan untuk mereset
+          password Anda.
+        </p>
+        <div class="auth-form-group">
+          <input
+            type="email"
+            class="auth-input"
+            id="forgot-password-email-input"
+            placeholder="Alamat Email"
+            required
+          />
+        </div>
+        <div style="display: flex; gap: 12px; margin-top: 24px">
+          <button
+            style="
+              flex: 1;
+              padding: 12px;
+              background: white;
+              border: 1px solid #ddd;
+              border-radius: 6px;
+              cursor: pointer;
+              font-weight: 600;
+            "
+            onclick="closeForgotPasswordModal()"
+          >
+            Batal
+          </button>
+          <button
+            id="btn-submit-forgot"
+            style="
+              flex: 1;
+              padding: 12px;
+              background: #111;
+              color: white;
+              border: none;
+              border-radius: 6px;
+              cursor: pointer;
+              font-weight: 600;
+            "
+            onclick="submitForgotPassword()"
+          >
+            Kirim
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    /* ── Help Modal ── */
-    function openHelpModal(e) {
-      e && e.preventDefault();
-      document.getElementById('help-overlay').classList.add('open');
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-    }
-
-    /* ── Lupa Password Modal ── */
-    function openForgotPasswordModal(e) {
-      e && e.preventDefault();
-      // Sembunyikan panel login jika sedang terbuka
-      const authOverlay = document.getElementById('auth-overlay');
-      if(authOverlay) authOverlay.classList.remove('open');
-      
-      const forgotOverlay = document.getElementById('forgot-password-overlay');
-      forgotOverlay.style.display = 'flex';
-      // Trigger reflow for transition
-      forgotOverlay.offsetHeight;
-      forgotOverlay.classList.add('open');
-      
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-    }
-
-    function closeForgotPasswordModal() {
-      const forgotOverlay = document.getElementById('forgot-password-overlay');
-      forgotOverlay.classList.remove('open');
-      
-      // Tunggu transisi selesai sebelum hide display
-      setTimeout(() => {
-        forgotOverlay.style.display = 'none';
-      }, 300);
-      
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-      document.getElementById('forgot-password-email-input').value = '';
-    }
-
-    async function submitForgotPassword() {
-      const emailInput = document.getElementById('forgot-password-email-input');
-      const email = emailInput.value.trim();
-      
-      if (!email) {
-        showNotification('Mohon masukkan email Anda', 'error');
-        return;
+    <script>
+      /* ── Help Modal ── */
+      function openHelpModal(e) {
+        e && e.preventDefault();
+        document.getElementById('help-overlay').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
       }
 
-      const btn = document.getElementById('btn-submit-forgot');
-      const originalText = btn.innerHTML;
-      btn.innerHTML = 'Loading...';
-      btn.disabled = true;
+      /* ── Lupa Password Modal ── */
+      function openForgotPasswordModal(e) {
+        e && e.preventDefault();
+        // Sembunyikan panel login jika sedang terbuka
+        const authOverlay = document.getElementById('auth-overlay');
+        if (authOverlay) authOverlay.classList.remove('open');
 
-      try {
-        const baseUrl = localStorage.getItem('base_url_api');
-        const response = await fetch(`${baseUrl}/request_reset_password`, {
-          method: 'POST',
-          credentials: 'include', 
-          headers: {
-            'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': 'true'
-          },
-          body: JSON.stringify({ email: email })
-        });
-        
-        const data = await response.json();
-        
-        if (data.status === 'success') {
-          showNotification('Link reset password berhasil dikirim!', 'success');
-          closeForgotPasswordModal();
-        } else {
-          showNotification('Gagal mengirim: ' + (data.message || 'Terjadi kesalahan'), 'error');
+        const forgotOverlay = document.getElementById('forgot-password-overlay');
+        forgotOverlay.style.display = 'flex';
+        // Trigger reflow for transition
+        forgotOverlay.offsetHeight;
+        forgotOverlay.classList.add('open');
+
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+      }
+
+      function closeForgotPasswordModal() {
+        const forgotOverlay = document.getElementById('forgot-password-overlay');
+        forgotOverlay.classList.remove('open');
+
+        // Tunggu transisi selesai sebelum hide display
+        setTimeout(() => {
+          forgotOverlay.style.display = 'none';
+        }, 300);
+
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        document.getElementById('forgot-password-email-input').value = '';
+      }
+
+      async function submitForgotPassword() {
+        const emailInput = document.getElementById('forgot-password-email-input');
+        const email = emailInput.value.trim();
+
+        if (!email) {
+          showNotification('Mohon masukkan email Anda', 'error');
+          return;
         }
-      } catch (error) {
-        console.error(error);
-        showNotification('Terjadi kesalahan jaringan.', 'error');
-      } finally {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-      }
-    }
 
-    function closeHelpModal() {
-      document.getElementById('help-overlay').classList.remove('open');
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-    }
-    function closeHelpModalOnBackdrop(e) {
-      if (e.target === document.getElementById('help-overlay')) closeHelpModal();
-    }
-    /* Close on Escape */
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeHelpModal();
-        closeForgotPasswordModal();
-      }
-    });
-    /* FAQ accordion */
-    function toggleFaq(btn) {
-      const item = btn.closest('.help-faq-item');
-      const isOpen = item.classList.contains('open');
-      /* Close all */
-      document.querySelectorAll('.help-faq-item.open').forEach(el => el.classList.remove('open'));
-      /* Open clicked (unless it was already open) */
-      if (!isOpen) item.classList.add('open');
-    }
+        const btn = document.getElementById('btn-submit-forgot');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = 'Loading...';
+        btn.disabled = true;
 
-    /* ── Sidebar Filter ── */
-    function openSidebarFilter() {
-      document.getElementById('sidebar-filter').classList.add('open');
-      document.getElementById('sidebar-overlay').classList.add('open');
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-    }
-    function closeSidebarFilter() {
-      document.getElementById('sidebar-filter').classList.remove('open');
-      document.getElementById('sidebar-overlay').classList.remove('open');
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-    }
-  </script>
-</body>
+        try {
+          const baseUrl = localStorage.getItem('base_url_api');
+          const response = await fetch(`${baseUrl}/password/request_reset_password`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+              'ngrok-skip-browser-warning': 'true',
+            },
+            body: JSON.stringify({ email: email }),
+          });
+
+          const data = await response.json();
+
+          if (data.status === 'success') {
+            showNotification('Link reset password berhasil dikirim!', 'success');
+            closeForgotPasswordModal();
+          } else {
+            showNotification('Gagal mengirim: ' + (data.message || 'Terjadi kesalahan'), 'error');
+          }
+        } catch (error) {
+          console.error(error);
+          showNotification('Terjadi kesalahan jaringan.', 'error');
+        } finally {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }
+      }
+
+      function closeHelpModal() {
+        document.getElementById('help-overlay').classList.remove('open');
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+      }
+      function closeHelpModalOnBackdrop(e) {
+        if (e.target === document.getElementById('help-overlay')) closeHelpModal();
+      }
+      /* Close on Escape */
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          closeHelpModal();
+          closeForgotPasswordModal();
+        }
+      });
+      /* FAQ accordion */
+      function toggleFaq(btn) {
+        const item = btn.closest('.help-faq-item');
+        const isOpen = item.classList.contains('open');
+        /* Close all */
+        document
+          .querySelectorAll('.help-faq-item.open')
+          .forEach((el) => el.classList.remove('open'));
+        /* Open clicked (unless it was already open) */
+        if (!isOpen) item.classList.add('open');
+      }
+
+      /* ── Sidebar Filter ── */
+      function openSidebarFilter() {
+        document.getElementById('sidebar-filter').classList.add('open');
+        document.getElementById('sidebar-overlay').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+      }
+      function closeSidebarFilter() {
+        document.getElementById('sidebar-filter').classList.remove('open');
+        document.getElementById('sidebar-overlay').classList.remove('open');
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+      }
+    </script>
+  </body>
 </html>

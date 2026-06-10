@@ -22,7 +22,9 @@ function addToCart(product) {
     const existing = cart.find(item => item.id === product.id);
 
     if (existing) {
-        existing.qty += 1;
+        showNotification("produk sudah didalam cart", "info");
+        openCartSidebar();
+        return;
     } else {
         cart.push({ ...product, qty: 1 });
     }
@@ -57,7 +59,12 @@ function openCartSidebar() {
 function closeCartSidebar() {
     document.getElementById("cart-sidebar").classList.remove("open");
     document.getElementById("cart-overlay").classList.remove("open");
-    document.body.style.overflow = "";
+    
+    // Only clear body overflow if product modal is not open
+    const pmOverlay = document.getElementById("product-modal-overlay");
+    if (!pmOverlay || !pmOverlay.classList.contains("open")) {
+        document.body.style.overflow = "";
+    }
 }
 
 function renderCartSidebar() {
@@ -338,7 +345,7 @@ function get_products() {
         `).join("");
     }
 
-    fetch(baseUrl + "/get_products", {
+    fetch(baseUrl + "/products/list", {
         method: 'GET',
         credentials: 'include',
         mode: "cors",
@@ -414,12 +421,21 @@ function renderProducts(products) {
 
         card.querySelector('.btn-keranjang').addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             addToCart(product);
         });
 
         card.querySelector('.btn-beli').addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             addToCart(product);
+        });
+
+        // Click on anywhere else in the card opens the modal
+        card.addEventListener('click', (e) => {
+            if (!e.target.closest('.card-actions')) {
+                openProductModal(product);
+            }
         });
 
         container.appendChild(card);
@@ -433,7 +449,7 @@ function renderProducts(products) {
 // ══════════════════════════════════════════
 function applyFilters() {
     const searchTerm = (document.getElementById('product-search')?.value || '').toLowerCase().trim();
-    const sortValue  = document.querySelector('.sort-select')?.value || 'Terbaru';
+    const sortValue = document.querySelector('.sort-select')?.value || 'Terbaru';
 
     // ── Kategori ──
     const kategoriChecks = document.querySelectorAll('#sidebar-filter .kategori-check');
@@ -459,9 +475,9 @@ function applyFilters() {
     let result = allProducts.filter(p => {
         // Search
         if (searchTerm) {
-            const name  = (p.product_name || '').toLowerCase();
-            const desc  = (p.description  || '').toLowerCase();
-            const type  = (p.type         || '').toLowerCase();
+            const name = (p.product_name || '').toLowerCase();
+            const desc = (p.description || '').toLowerCase();
+            const type = (p.type || '').toLowerCase();
             if (!name.includes(searchTerm) && !desc.includes(searchTerm) && !type.includes(searchTerm)) return false;
         }
 
@@ -549,8 +565,9 @@ async function googleLogin() {
     }
 
     try {
+        const baseUrl = localStorage.getItem("base_url_api");
         // Kirim ke backend menggunakan fetch
-        const response = await fetch(`https://6c3f-180-254-113-31.ngrok-free.app/callback_auth?code=${code}`, {
+        const response = await fetch(`${baseUrl}/auth/callback_auth?code=${code}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -632,7 +649,7 @@ async function logout() {
     //Ambil base url 
     const baseUrl = localStorage.getItem("base_url_api");
 
-    fetch(baseUrl + "/logout", {
+    fetch(baseUrl + "/auth/logout", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -964,7 +981,7 @@ function initProductSearch() {
 function initSidebarFilter() {
     // ── Kategori: Semua / individual ──
     const kategoriSemua = document.querySelector('#sidebar-filter .kategori-check[data-value="semua"]');
-    const kategoriItems  = document.querySelectorAll('#sidebar-filter .kategori-check:not([data-value="semua"])');
+    const kategoriItems = document.querySelectorAll('#sidebar-filter .kategori-check:not([data-value="semua"])');
 
     if (kategoriSemua) {
         // Klik "Semua" → uncheck semua item individual
@@ -989,7 +1006,7 @@ function initSidebarFilter() {
 
     // ── Tingkat: Semua / individual ──
     const tingkatSemua = document.querySelector('#sidebar-filter .tingkat-check[data-value="semua"]');
-    const tingkatItems  = document.querySelectorAll('#sidebar-filter .tingkat-check:not([data-value="semua"])');
+    const tingkatItems = document.querySelectorAll('#sidebar-filter .tingkat-check:not([data-value="semua"])');
 
     if (tingkatSemua) {
         tingkatSemua.addEventListener('change', () => {
@@ -1013,7 +1030,7 @@ function initSidebarFilter() {
     document.getElementById('sidebar-reset-btn')?.addEventListener('click', () => {
         if (kategoriSemua) kategoriSemua.checked = true;
         kategoriItems.forEach(cb => { cb.checked = false; });
-        if (tingkatSemua)  tingkatSemua.checked  = true;
+        if (tingkatSemua) tingkatSemua.checked = true;
         tingkatItems.forEach(cb => { cb.checked = false; });
         const searchInput = document.getElementById('product-search');
         if (searchInput) searchInput.value = '';
@@ -1038,3 +1055,65 @@ document.addEventListener("DOMContentLoaded", () => {
     // googleLogin();
 });
 
+// ══════════════════════════════════════════
+//  PRODUCT MODAL
+// ══════════════════════════════════════════
+let currentModalProduct = null;
+
+function openProductModal(product) {
+    currentModalProduct = product;
+    
+    // Populate data
+    const imgEl = document.getElementById("pm-img");
+    if (imgEl) imgEl.src = product.image || FALLBACK_THUMB;
+    
+    const titleEl = document.getElementById("pm-title");
+    if (titleEl) titleEl.textContent = product.product_name || "Unknown Product";
+    
+    const typeEl = document.getElementById("pm-type");
+    if (typeEl) typeEl.textContent = product.type || "Online Course";
+    
+    const priceEl = document.getElementById("pm-price");
+    if (priceEl) priceEl.textContent = "Rp " + Number(product.price || 0).toLocaleString('id-ID');
+    
+    const descEl = document.getElementById("pm-desc");
+    if (descEl) descEl.innerHTML = product.description || "Tidak ada deskripsi.";
+    
+    // Open modal
+    const overlay = document.getElementById("product-modal-overlay");
+    if (overlay) {
+        overlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+    }
+}
+
+function closeProductModal() {
+    const overlay = document.getElementById("product-modal-overlay");
+    if (overlay) {
+        overlay.classList.remove("open");
+        // Only re-enable scrolling if cart is not open
+        if (!document.getElementById("cart-overlay")?.classList.contains("open")) {
+            document.body.style.overflow = "";
+        }
+    }
+}
+
+// Bind buy button inside modal
+document.addEventListener("DOMContentLoaded", () => {
+    const pmBuyBtn = document.getElementById("pm-buy-btn");
+    if (pmBuyBtn) {
+        pmBuyBtn.addEventListener("click", () => {
+            if (currentModalProduct) {
+                addToCart(currentModalProduct);
+                closeProductModal(); // Tutup modal saat beli
+            }
+        });
+    }
+    
+    // Close modal on Escape
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            closeProductModal();
+        }
+    });
+});

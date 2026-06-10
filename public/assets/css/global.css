@@ -45,3 +45,36 @@
   background: var(--white);
   color: var(--black);
 }
+
+[data-theme="dark"] .auth-modal,
+[data-theme="dark"] .product-modal-info,
+[data-theme="dark"] .checkout-modal,
+[data-theme="dark"] .confirm-modal,
+[data-theme="dark"] .help-modal,
+[data-theme="dark"] .panel,
+[data-theme="dark"] .payment-group,
+[data-theme="dark"] .payment-group-header,
+[data-theme="dark"] .payment-group-content,
+[data-theme="dark"] .profile-card,
+[data-theme="dark"] .profile-header,
+[data-theme="dark"] .history-card,
+[data-theme="dark"] .order-card,
+[data-theme="dark"] .card,
+[data-theme="dark"] .notif-dropdown,
+[data-theme="dark"] .profile-dropdown,
+[data-theme="dark"] .modal-container,
+[data-theme="dark"] .auth-panel,
+[data-theme="dark"] .transaction-card {
+  background: var(--gray-100) !important;
+}
+
+[data-theme="dark"] .auth-input,
+[data-theme="dark"] .search-input-field,
+[data-theme="dark"] .filter-select,
+[data-theme="dark"] .profile-input,
+[data-theme="dark"] .modal-input,
+[data-theme="dark"] .voucher-input {
+  background: var(--white) !important;
+  color: var(--black) !important;
+  border-color: var(--gray-300) !important;
+}
