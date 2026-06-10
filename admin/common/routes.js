@@ -13,4 +13,8 @@ router.get('/forgot-password', (req, res) => {
   res.render('../modules/login/forgot_password.ejs');
 });
 
+router.get('/profile', (req, res) => {
+  res.render('../modules/profile/profile.ejs');
+});
+
 module.exports = router;

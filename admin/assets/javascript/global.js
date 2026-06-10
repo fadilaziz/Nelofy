@@ -197,7 +197,7 @@ function showConfirmModal(message, title = 'Konfirmasi') {
 window.addEventListener('DOMContentLoaded', async () => {
   try {
     const baseUrl = localStorage.getItem('base_url_api');
-    const response = await fetch(baseUrl + '/auth/check_session', {
+    const response = await fetch(baseUrl + '/auth/check_session_admin', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -208,7 +208,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     const data = await response.json();
     if (data.status === 401 || data.message === 'Unauthorized') {
-      localStorage.removeItem('bp_username');
+      localStorage.removeItem('admin_username');
       updateUI(null);
       showNotification('Session Berakhir, Silahkan Login Kembali', 'error');
       // Redirect to login page if we are in dashboard
@@ -216,7 +216,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         window.location.href = '/';
       }
     } else if (data.code === 200 && data.status === 'success') {
-      let saveUsername = localStorage.getItem('bp_username');
+      let saveUsername = localStorage.getItem('admin_username');
       if (saveUsername) {
         try {
           saveUsername = JSON.parse(saveUsername);
@@ -228,7 +228,7 @@ window.addEventListener('DOMContentLoaded', async () => {
           console.error(e);
         }
       } else if (data.user && data.user.username) {
-        localStorage.setItem('bp_username', JSON.stringify(data.user));
+        localStorage.setItem('admin_username', JSON.stringify(data.user));
         updateUI(data.user.username);
       }
     }
@@ -241,18 +241,80 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
+// Cek session saat halaman pertama kali dimuat
+window.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const baseUrl = localStorage.getItem('base_url_api');
+    const response = await fetch(baseUrl + '/auth/check_session_admin', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
+      },
+      credentials: 'include',
+    });
+
+    const data = await response.json();
+    if (data.message === 'Unauthorized') {
+      // Hapus semua data di localstorage bp_cart, bp_username, bp_notifications, bp_pending_order_id
+      // localStorage.removeItem('bp_cart');
+      // localStorage.removeItem('admin_username');
+      // localStorage.removeItem('bp_notifications');
+      // localStorage.removeItem('bp_pending_order_id');
+      // updateUI(null);
+
+      //tampilkan notifikasi pemberitahuan
+      // showNotification('Session Berakhir, Silahkan Login Kembali', 'error');
+      //redirect ke halaman login
+      window.location.href = '/login';
+    } else if (data.message === 'forbbiden') {
+      showNotification('Anda tidak memiliki akses untuk mengakses halaman ini', 'error');
+      localStorage.removeItem('admin_username');
+      updateUI(null);
+      window.location.href = '/login';
+    } else if (data.code === 200 && data.status === 'success') {
+      // Session Valid arahkan ke dashboard
+      //Cek hlaman saat ini
+      if (window.location.pathname === '/') {
+        //Berhenti jika halaman adalah halaman dashboard
+        return;
+      }
+      // Session valid, tampilkan auth panel
+      let saveUsername = localStorage.getItem('admin_username');
+      if (saveUsername) {
+        try {
+          saveUsername = JSON.parse(saveUsername);
+          let fixUsername = saveUsername.username;
+          if (fixUsername) {
+            updateUI(fixUsername);
+          }
+        } catch (e) {
+          console.error('Error parsing admin_username:', e);
+        }
+      } else if (data.user && data.user.username) {
+        localStorage.setItem('admin_username', JSON.stringify(data.user));
+        updateUI(data.user.username);
+      }
+    }
+  } catch (error) {
+    console.error('Error checking session:', error);
+    // Jika ada error, tampilkan auth panel
+    updateUI(null);
+  }
+});
+
 // Logout
 async function logout() {
   const isConfirmed = await showConfirmModal('Apakah Anda yakin ingin logout?');
   if (!isConfirmed) return;
 
-  if (!localStorage.getItem('bp_username')) {
+  if (!localStorage.getItem('admin_username')) {
     showNotification('Anda belum login', 'error');
     return;
   }
 
   const baseUrl = localStorage.getItem('base_url_api');
-  fetch(baseUrl + '/auth/logout', {
+  fetch(baseUrl + '/auth/logout-admin', {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -263,7 +325,7 @@ async function logout() {
     .then((response) => response.json())
     .then((data) => {
       if (data.code === 200) {
-        localStorage.removeItem('bp_username');
+        localStorage.removeItem('admin_username');
         showNotification(data.message, 'success');
         updateUI(null);
         window.location.href = '/';

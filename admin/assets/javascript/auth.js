@@ -1,6 +1,5 @@
 //Ambol Base URL di localstorage
 const BASE_URL = localStorage.getItem('BASE_URL_API');
-alert(BASE_URL + '/auth/login-admin');
 
 // Toggle password visibility
 function togglePassword() {
@@ -48,7 +47,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true',
       },
-      body: JSON.stringify({ user_email: email, user_pass: pass, user_role: role }),
+      body: JSON.stringify({ email: email, password: pass, role: role }),
     });
 
     const data = await res.json();
