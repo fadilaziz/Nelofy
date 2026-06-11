@@ -11,7 +11,7 @@ app.use(express.json());
 
 // Konfigurasi CORS
 const corsOptions = {
-  origin: [process.env.URL_FRONTEND, process.env.URL_FRONTEND_ADMIN],
+  origin: [process.env.BASE_URL, process.env.URL_FRONTEND_PUBLIC, process.env.URL_FRONTEND_ADMIN],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'ngrok-skip-browser-warning'],
