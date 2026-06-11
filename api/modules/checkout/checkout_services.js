@@ -431,9 +431,9 @@ export const checkout_send_queue = async (payload) => {
                             <td class="total-amount">${formatRupiah(payload.total_amount)}</td>
                         </tr>
                     </table>
-                    <a style="margin: 5px 16px; text-align: center;" href="https://faidilaziz.my.id/payment?order_id=${payload.order_id}">Klik Disini Untuk Melakukan Pembayaran</a>
+                    <a style="margin: 20px 16px; text-align: center;" href="${process.env.BASE_URL}/payment?order_id=${payload.no_invoice}">Klik Disini Untuk Melakukan Pembayaran</a>
 
-                    <p class="note">Sistem akan melakukan verifikasi otomatis dalam 1&ndash;5 menit setelah transfer diterima.</p>
+                    <p class="note">Sistem akan segera melakukan verifikasi otomatis setelah transfer diterima.</p>
                 </div>
 
                 <!-- Footer -->
@@ -471,7 +471,7 @@ Terima kasih telah berbelanja! Pesanan Anda telah kami terima dan sedang menungg
 *Metode Pembayaran:* ${payload.payment_method}
 *Batas Pembayaran:* ${payload.expired_at}
 
-*Link Pembayaran:* https://faidilaziz.my.id/payment?order_id=${payload.order_id}
+*Link Pembayaran:* https://faidilaziz.my.id/payment?order_id=${payload.no_invoice}
 
 *Catatan:*
 Pembayaran akan diverifikasi secara otomatis oleh sistem. Anda akan menerima notifikasi segera setelah transaksi berhasil.

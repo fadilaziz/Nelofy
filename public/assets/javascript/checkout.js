@@ -610,8 +610,9 @@ function checkoutToPayment() {
         btn.innerHTML = 'Bayar Sekarang';
         btn.disabled = false;
 
+        // Redirect ke payment page
         setTimeout(() => {
-          window.location.href = '/payment';
+          window.location.href = '/payment?order_id=' + data.data.no_invoice;
         }, 1000);
       } else {
         showNotification(data.message, 'error');

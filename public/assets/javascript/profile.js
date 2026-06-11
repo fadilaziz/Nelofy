@@ -191,7 +191,7 @@ window.openDetailTransaksiModal = function (noInvoice) {
 
   let actionButtonHtml = '';
   if (isPending) {
-    actionButtonHtml = `<a href="/payment?order_id=${tx.order_id}" style="display: block; width: 100%; text-align: center; padding: 12px; background: var(--black); color: var(--white); border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; transition: 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">Bayar Sekarang</a>`;
+    actionButtonHtml = `<a href="/payment?order_id=${tx.no_invoice}" style="display: block; width: 100%; text-align: center; padding: 12px; background: var(--black); color: var(--white); border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; transition: 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">Bayar Sekarang</a>`;
   } else if (isPaid) {
     actionButtonHtml = `<a href="/products" style="display: block; width: 100%; text-align: center; padding: 12px; background: var(--gray-100); color: var(--black); border: 1px solid var(--gray-300); border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; margin-top: 24px; transition: 0.2s;">Mulai Belajar</a>`;
   }
@@ -908,7 +908,7 @@ window.filterTransaksi = function (resetPage = false) {
     if (isPending) {
       actionHtml = `
       <button onclick="window.openDetailTransaksiModal('${tx.no_invoice}')" class="btn-detail">Detail</button>
-      <a style="padding: 6px 14px; background: var(--black); color: var(--white); border-radius: 6px; font-size: 12px; font-weight: 600; text-decoration: none; transition: 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" href="/payment?order_id=${tx.order_id}" class="btn-bayar">Bayar</a>
+      <a style="padding: 6px 14px; background: var(--black); color: var(--white); border-radius: 6px; font-size: 12px; font-weight: 600; text-decoration: none; transition: 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" href="/payment?order_id=${tx.no_invoice}" class="btn-bayar">Bayar</a>
     `;
     } else if (isPaid) {
       actionHtml = `
