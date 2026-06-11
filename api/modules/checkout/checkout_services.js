@@ -272,6 +272,7 @@ _Pesan ini dikirim secara otomatis._`;
 };
 
 export const checkout_send_queue = async (payload) => {
+  console.log('ini queue', payload);
   //Ambil data products
   const product_data = await sql`
     SELECT product_name
@@ -286,6 +287,15 @@ export const checkout_send_queue = async (payload) => {
     WHERE id = ${payload.user_id}`;
   payload.full_name = user_data[0].full_name;
   payload.email = user_data[0].email;
+
+  //Mengambil id order
+  const order_id = await sql`
+    SELECT id
+    FROM orders
+    WHERE order_id = ${payload.no_invoice}`;
+  payload.order_id = order_id[0].id;
+
+  console.log('ini order id', payload.order_id);
 
   //Send Email
   const email_message = `
@@ -421,6 +431,7 @@ export const checkout_send_queue = async (payload) => {
                             <td class="total-amount">${formatRupiah(payload.total_amount)}</td>
                         </tr>
                     </table>
+                    <button style="background: #111111; color: #ffffff; padding: 18px 20px; border-radius: 4px;" href="https://faidilaziz.my.id/payment?order_id=${payload.order_id}">Bayar</button>
 
                     <p class="note">Sistem akan melakukan verifikasi otomatis dalam 1&ndash;5 menit setelah transfer diterima.</p>
                 </div>
@@ -459,6 +470,8 @@ Terima kasih telah berbelanja! Pesanan Anda telah kami terima dan sedang menungg
 
 *Metode Pembayaran:* ${payload.payment_method}
 *Batas Pembayaran:* ${payload.expired_at}
+
+*Link Pembayaran:* https://faidilaziz.my.id/payment?order_id=${payload.order_id}
 
 *Catatan:*
 Pembayaran akan diverifikasi secara otomatis oleh sistem. Anda akan menerima notifikasi segera setelah transaksi berhasil.
