@@ -143,6 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
   btnAddEntity.addEventListener('click', () => {
     if (currentTab === 'user') {
       openAddUserModal();
+    } else if (currentTab === 'order') {
+      openAddOrderModal();
     }
   });
 
@@ -162,8 +164,95 @@ document.addEventListener('DOMContentLoaded', () => {
   initRealtimeSync();
 });
 
+function closeAddOrderModal() {
+  const overlay = document.getElementById('add-order-modal-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+async function openAddOrderModal() {
+  const userSelect = document.getElementById('add-order-user');
+  const productSelect = document.getElementById('add-order-product');
+  
+  userSelect.innerHTML = '<option value="" disabled selected>Pilih User...</option>';
+  allUsers.forEach((u) => {
+    userSelect.innerHTML += `<option value="${u.id}">${u.full_name} (${u.username})</option>`;
+  });
+  
+  productSelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
+  const baseUrl = localStorage.getItem('base_url_api');
+  try {
+    const res = await fetch(`${baseUrl}/admin/products-list`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+      credentials: 'include',
+    });
+    const result = await res.json();
+    if (result.code === 200) {
+      productSelect.innerHTML = '<option value="" disabled selected>Pilih Produk...</option>';
+      (result.products || []).forEach((p) => {
+        productSelect.innerHTML += `<option value="${p.id}">${p.product_name}</option>`;
+      });
+    }
+  } catch (e) {
+    productSelect.innerHTML = '<option value="" disabled>Gagal memuat produk</option>';
+  }
+  
+  document.getElementById('add-order-modal-overlay').classList.add('open');
+}
+
+async function saveAddOrderForm(event) {
+  event.preventDefault();
+  const userId = document.getElementById('add-order-user').value;
+  const productId = document.getElementById('add-order-product').value;
+  const paymentMethod = document.getElementById('add-order-payment').value;
+  
+  if (!userId || !productId) {
+    showNotification('Pilih User dan Produk', 'warning');
+    return;
+  }
+  
+  const btnSubmit = document.getElementById('btn-submit-add-order');
+  btnSubmit.disabled = true;
+  btnSubmit.textContent = 'Menyimpan...';
+  
+  const payload = {
+    user_id: parseInt(userId),
+    product_id: parseInt(productId),
+    qty: 1,
+    payment_method: paymentMethod,
+  };
+  
+  const baseUrl = localStorage.getItem('base_url_api');
+  try {
+    const res = await fetch(`${baseUrl}/admin/add-order-data`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
+      },
+      credentials: 'include',
+      body: JSON.stringify(payload),
+    });
+    
+    const result = await res.json();
+    if (res.status === 200 || result.code === 200) {
+      showNotification('Pesanan berhasil ditambahkan', 'success');
+      closeAddOrderModal();
+      // Fetch ulang data order
+      fetchDashboardStats();
+    } else {
+      showNotification(result.message || 'Gagal menyimpan pesanan', 'error');
+    }
+  } catch (e) {
+    console.error(e);
+    showNotification('Terjadi kesalahan server', 'error');
+  } finally {
+    btnSubmit.disabled = false;
+    btnSubmit.textContent = 'Simpan Pesanan';
+  }
+}
+
 // ══════════════════════════════════════════
-//  TAB NAVIGATION
+//  INITIALIZATION
 // ══════════════════════════════════════════
 function initTabSwitching() {
   const sidebarLinks = document.querySelectorAll('.sidebar-link');
@@ -234,7 +323,8 @@ function switchTab(tab) {
     totalProductLabel.textContent = 'Daftar Pesanan';
     adminSearchWrapper.style.display = 'flex';
     if (btnAddEntity) {
-      btnAddEntity.style.display = 'none';
+      btnAddEntity.style.display = 'inline-flex';
+      btnAddEntity.textContent = '+ Tambah Order';
     }
     const filterBtn = document.getElementById('filter-open-btn');
     if (filterBtn) filterBtn.style.display = 'inline-flex';
@@ -488,9 +578,7 @@ function renderUsers() {
 // ══════════════════════════════════════════
 function renderPaginationControls(totalItems, currentPage, onPageChange, containerEl) {
   containerEl.innerHTML = '';
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  if (totalPages <= 1) return;
+  const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
 
   // Prev Button
   const prevBtn = document.createElement('a');
@@ -917,19 +1005,46 @@ function renderOrders() {
 
 function renderOrderPagination() {
   orderPagination.innerHTML = '';
-  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
-  if (totalPages <= 1) return;
+  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage) || 1;
 
+  // Prev Button
+  const prevBtn = document.createElement('button');
+  prevBtn.className = `page-btn ${orderPage === 1 ? 'disabled' : ''}`;
+  prevBtn.textContent = '‹';
+  prevBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (orderPage > 1) {
+      orderPage--;
+      renderOrders();
+    }
+  });
+  orderPagination.appendChild(prevBtn);
+
+  // Pages Button
   for (let i = 1; i <= totalPages; i++) {
     const btn = document.createElement('button');
     btn.className = `page-btn ${i === orderPage ? 'active' : ''}`;
     btn.textContent = i;
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
       orderPage = i;
       renderOrders();
     });
     orderPagination.appendChild(btn);
   }
+
+  // Next Button
+  const nextBtn = document.createElement('button');
+  nextBtn.className = `page-btn ${orderPage === totalPages ? 'disabled' : ''}`;
+  nextBtn.textContent = '›';
+  nextBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (orderPage < totalPages) {
+      orderPage++;
+      renderOrders();
+    }
+  });
+  orderPagination.appendChild(nextBtn);
 }
 
 // ══════════════════════════════════════════
@@ -1038,6 +1153,9 @@ function viewOrderDetail(id) {
 
   const container = document.getElementById('order-detail-content');
   const d = new Date(order.created_at).toLocaleString('id-ID');
+  const expiredText = order.expired_at ? new Date(order.expired_at).toLocaleString('id-ID') : '-';
+  const qrisLink = order.qris_url ? `<a href="${order.qris_url}" target="_blank" style="color: var(--primary); text-decoration: underline; font-size: 13px; font-weight: 500;">Buka Link Pembayaran</a>` : '-';
+  const qrisImageHtml = order.qris_url ? `<div style="margin-top: 12px; text-align: center;"><img src="${order.qris_url}" alt="QRIS" style="max-width: 200px; border-radius: 8px; border: 1px solid #e5e7eb;"/></div>` : '';
   
   let statusBadge = '';
   if (order.status === 'SUCCESS') {
@@ -1073,7 +1191,20 @@ function viewOrderDetail(id) {
         </div>
       </div>
 
-      <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; padding-top: 16px; border-top: 1px solid #e5e7eb;">
+        <div>
+          <div style="font-size: 12px; color: var(--gray-500); font-weight: 600; margin-bottom: 4px;">Batas Pembayaran</div>
+          <div style="font-weight: 600; color: var(--black); font-size: 13px;">${expiredText}</div>
+        </div>
+        <div>
+          <div style="font-size: 12px; color: var(--gray-500); font-weight: 600; margin-bottom: 4px;">Link QRIS</div>
+          <div>${qrisLink}</div>
+        </div>
+      </div>
+
+      ${qrisImageHtml}
+
+      <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 2px rgba(0,0,0,0.02); margin-top: 20px;">
         <div style="font-weight: 600; color: var(--gray-500);">Total Harga</div>
         <div style="font-weight: 800; font-size: 18px; color: var(--black);">Rp ${Number(order.total_amount || 0).toLocaleString('id-ID')}</div>
       </div>

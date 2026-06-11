@@ -21,9 +21,10 @@
     <link rel="icon" href="../../assets/favicon.png" />
     <link rel="stylesheet" href="../../assets/css/global.css" />
     <link rel="stylesheet" href="../../assets/css/dashboard.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script defer src="../../assets/javascript/global.js"></script>
-    <script defer src="../../assets/javascript/navbar.js"></script>
-    <script defer src="../../assets/javascript/dashboard.js"></script>
+    <script defer src="../../assets/javascript/navbar.js?v=2"></script>
+    <script defer src="../../assets/javascript/dashboard.js?v=2"></script>
 
     <style>
       /* Dynamic Admin Sections */
@@ -1185,6 +1186,56 @@
         <!-- Content -->
         <div style="padding: 24px" id="user-detail-content">
           <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+    <!-- ─── ADD ORDER MODAL ─── -->
+    <div class="product-modal-overlay" id="add-order-modal-overlay" style="z-index: 10000">
+      <div class="product-modal" style="overflow-y: auto; padding: 0; max-width: 450px">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--gray-200); background: #f8fafc;">
+          <h2 style="font-size: 18px; font-weight: 700; margin: 0; color: var(--black); display: flex; align-items: center; gap: 8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--blue-600)">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+            Tambah Pesanan Baru
+          </h2>
+          <button onclick="closeAddOrderModal()" style="background: none; border: none; cursor: pointer; color: var(--gray-500); padding: 4px; transition: color 0.2s;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <!-- Content -->
+        <div class="product-modal-content" style="padding: 24px">
+          <form id="add-order-form" onsubmit="saveAddOrderForm(event)">
+            
+            <div class="modal-form-group">
+              <label for="add-order-user" style="font-weight: 600; color: #334155">Pilih Pengguna</label>
+              <select id="add-order-user" class="modal-form-input" style="padding: 12px; border-radius: 8px; font-weight: 500; cursor: pointer" required>
+                <option value="" disabled selected>Pilih User...</option>
+              </select>
+            </div>
+
+            <div class="modal-form-group">
+              <label for="add-order-product" style="font-weight: 600; color: #334155">Pilih Produk</label>
+              <select id="add-order-product" class="modal-form-input" style="padding: 12px; border-radius: 8px; font-weight: 500; cursor: pointer" required>
+                <option value="" disabled selected>Pilih Produk...</option>
+              </select>
+            </div>
+
+            <div class="modal-form-group">
+              <label for="add-order-payment" style="font-weight: 600; color: #334155">Metode Pembayaran</label>
+              <select id="add-order-payment" class="modal-form-input" style="padding: 12px; border-radius: 8px; font-weight: 500; cursor: pointer" required>
+                <option value="QRIS" selected>QRIS</option>
+                <option value="BCA">Transfer BCA</option>
+              </select>
+            </div>
+
+            <button type="submit" id="btn-submit-add-order" style="width: 100%; padding: 14px; background: var(--black); color: var(--white); border: none; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; transition: opacity 0.2s; margin-top: 10px;">
+              Simpan Pesanan
+            </button>
+          </form>
         </div>
       </div>
     </div>

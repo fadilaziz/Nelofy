@@ -1,4 +1,6 @@
 import service from './admin_service.js';
+import checkoutService from '../checkout/checkout_services.js';
+import { broadcastUpdate } from './admin_sse.js';
 import { addSseClient, removeSseClient, getSseClientCount } from './admin_sse.js';
 
 // Ambil data Admin
@@ -88,13 +90,34 @@ export const get_all_orders = async (req, res) => {
   }
 };
 
-// Menambahkan data order
 export const add_order_data = async (req, res) => {
   try {
-    console.log('ini data order', req.body);
-    const result = await service.add_order_data(req.body);
-    return res.status(result.code).json(result);
+    import('fs').then(fs => fs.appendFileSync('err_log.txt', '\n--- NEW REQ ---\nREQ BODY: ' + JSON.stringify(req.body) + '\n'));
+    // 1. Capture and validate payload from req.body (user_id, product_id, qty, payment_method)
+    let payload = await checkoutService.capture_payload_checkout(req.body);
+    payload = await checkoutService.validation_payload_checkout(payload);
+    
+    // 2. Pricing and logic
+    payload = await checkoutService.get_product_price(payload);
+    payload = await checkoutService.calculate_discount(payload);
+    
+    // 3. Begin Transaction (klikqris generation)
+    payload = await checkoutService.transaction(payload);
+    
+    // 4. Background tasks
+    payload = await checkoutService.checkout_send_queue(payload);
+
+    // 5. Notify dashboard clients
+    broadcastUpdate('order', 'created');
+
+    return res.status(200).json({
+      code: 200,
+      status: 'success',
+      message: 'Data order berhasil ditambahkan',
+      data: payload,
+    });
   } catch (error) {
+    import('fs').then(fs => fs.appendFileSync('err_log.txt', '\nERROR:\n' + String(error.stack || error.message) + '\n'));
     return res.status(500).json({
       code: 500,
       status: 'error',

@@ -1,0 +1,39 @@
+TypeError: undefined is not an object (evaluating 'dataUser[0].full_name')
+    at <anonymous> (C:\Users\Personal\OneDrive\Documents\project\Nelofy\api\modules\checkout\checkout_services.js:19:26)
+    at async <anonymous> (C:\Users\Personal\OneDrive\Documents\project\Nelofy\api\modules\admin\admin_controller.js:97:41)
+    at processTicksAndRejections (native:7:39)
+--- NEW REQ ---
+REQ BODY: {"user_id":8,"product_id":5,"qty":1,"payment_method":"QRIS"}
+
+--- NEW REQ ---
+REQ BODY: {"user_id":4,"product_id":10,"qty":1,"payment_method":"QRIS"}
+
+--- NEW REQ ---
+REQ BODY: {"user_id":8,"product_id":5,"qty":1,"payment_method":"QRIS"}
+
+--- NEW REQ ---
+REQ BODY: {"user_id":10,"product_id":2,"qty":1,"payment_method":"QRIS"}
+
+--- NEW REQ ---
+REQ BODY: {"user_id":8,"product_id":6,"qty":1,"payment_method":"QRIS"}
+
+--- NEW REQ ---
+REQ BODY: {"user_id":8,"product_id":6,"qty":1,"payment_method":"QRIS"}
+
+--- NEW REQ ---
+REQ BODY: {"user_id":10,"product_id":6,"qty":1,"payment_method":"QRIS"}
+
+--- NEW REQ ---
+REQ BODY: {"user_id":8,"product_id":6,"qty":1,"payment_method":"QRIS"}
+
+--- NEW REQ ---
+REQ BODY: {"user_id":10,"product_id":6,"qty":1,"payment_method":"QRIS"}
+
+--- NEW REQ ---
+REQ BODY: {"user_id":10,"product_id":6,"qty":1,"payment_method":"QRIS"}
+
+--- NEW REQ ---
+REQ BODY: {"user_id":8,"product_id":9,"qty":1,"payment_method":"QRIS"}
+
+--- NEW REQ ---
+REQ BODY: {"user_id":10,"product_id":6,"qty":1,"payment_method":"QRIS"}

@@ -170,49 +170,6 @@ const get_all_orders = async () => {
   }
 };
 
-// Menambahkan data order baru
-const add_order_data = async (data) => {
-  try {
-    const { user_id, product_id, total_amount, status } = data;
-
-    // Generate Invoice Order ID
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const random = Math.random().toString(36).substring(2, 6).toUpperCase();
-    const order_id = `INV-${year}${month}${day}-${random}`;
-
-    const expired_at = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-    const signature = Math.random().toString(36).substring(2, 15);
-    const qris_url = '';
-    const qris_image = '';
-
-    const result = await sql`
-    INSERT INTO orders (order_id, user_id, product_id, total_amount, status, signature, qris_url, expired_at, qris_image, created_at)
-    VALUES (${order_id}, ${user_id}, ${product_id}, ${total_amount}, ${status}, ${signature}, ${qris_url}, ${expired_at}, ${qris_image}, ${new Date()})
-    RETURNING id`;
-
-    const order_db_id = result[0].id;
-    const invoiceStatus = status === 'SUCCESS' ? 'paid' : status === 'EXPIRED' ? 'ex' : 'pending';
-    await sql`
-    INSERT INTO invoices (order_id, no_invoice, jatuh_tempo, status, created_at)
-    VALUES (${order_db_id}, ${order_id}, ${expired_at}, ${invoiceStatus}, ${new Date()})`;
-
-    broadcastUpdate('order', 'created');
-    return {
-      code: 200,
-      status: 'success',
-      message: 'Data order berhasil ditambahkan',
-    };
-  } catch (error) {
-    return {
-      code: 500,
-      status: 'error',
-      message: error.message,
-    };
-  }
-};
 
 // Mengubah data order
 const update_order_data = async (id, data) => {
@@ -292,7 +249,6 @@ const service = {
   update_user_data,
   delete_user_data,
   get_all_orders,
-  add_order_data,
   update_order_data,
   delete_order_data,
   get_products,
