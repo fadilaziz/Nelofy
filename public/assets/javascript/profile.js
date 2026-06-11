@@ -485,7 +485,6 @@ window.renderProfile = function () {
 
             <div style="margin-top: 32px; border-top: 1px solid var(--gray-200); padding-top: 24px; display: flex; justify-content: flex-end; gap: 12px;">
               <button class="logout-main-btn" onclick="logoutUser()">Logout</button>
-              <button class="edit-profile-main-btn" onclick="openEditProfileModal()">Edit Profile</button>
             </div>
           </div>
         </div>
