@@ -431,7 +431,7 @@ export const checkout_send_queue = async (payload) => {
                             <td class="total-amount">${formatRupiah(payload.total_amount)}</td>
                         </tr>
                     </table>
-                    <button style="background: #111111; color: #ffffff; padding: 18px 20px; border-radius: 4px;" href="https://faidilaziz.my.id/payment?order_id=${payload.order_id}">Bayar</button>
+                    <a href="https://faidilaziz.my.id/payment?order_id=${payload.order_id}">Klik Disini Untuk Melakukan Pembayaran</a>
 
                     <p class="note">Sistem akan melakukan verifikasi otomatis dalam 1&ndash;5 menit setelah transfer diterima.</p>
                 </div>
