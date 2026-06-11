@@ -200,17 +200,17 @@ export const update_status_order = async (payload) => {
     //Jika status PAID maka akan update status order
     if (payload.status == 'PAID') {
       const [order] = await sql`
-            UPDATE orders SET status = ${payload.status}
+            UPDATE orders SET status = 'SUCCESS'
             WHERE signature = ${payload.signature}
             AND order_id = ${payload.order_id}`;
       await sql`
-            UPDATE invoices SET status = 'PAID'
+            UPDATE invoices SET status = 'SUCCESS'
             WHERE no_invoice = ${payload.order_id}`;
       return order;
       //Jika status EXPIRED maka akan update status order
     } else if (payload.status == 'EXPIRED') {
       const [order] = await sql`
-            UPDATE orders SET status = ${payload.status}
+            UPDATE orders SET status = 'EXPIRED'
             WHERE signature = ${payload.signature}
             AND order_id = ${payload.order_id}`;
       await sql`

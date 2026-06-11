@@ -291,8 +291,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     const data = await response.json();
     console.log('data', data);
     if (data.message === 'Unauthorized') {
-      // Hapus semua data di localstorage
-      localStorage.removeItem('bp_cart', 'bp_username', 'bp_notifications', 'bp_pending_order_id');
+      // Hapus data sesi di localstorage, tapi biarkan bp_cart agar produk tidak hilang
+      localStorage.removeItem('bp_username');
+      localStorage.removeItem('bp_notifications');
+      localStorage.removeItem('bp_pending_order_id');
       updateUI(null);
 
       //cek lokasi saat ini
@@ -310,8 +312,10 @@ window.addEventListener('DOMContentLoaded', async () => {
         showNotification('Silahkan Login Terlebih Dahulu', 'error');
       }
     } else if (data.message === 'Forbidden') {
-      // Hapus semua data di localstorage
-      localStorage.removeItem('bp_cart', 'bp_username', 'bp_notifications', 'bp_pending_order_id');
+      // Hapus data sesi di localstorage, tapi biarkan bp_cart agar produk tidak hilang
+      localStorage.removeItem('bp_username');
+      localStorage.removeItem('bp_notifications');
+      localStorage.removeItem('bp_pending_order_id');
       updateUI(null);
 
       //cek lokasi saat ini

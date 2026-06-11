@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════
 
 //Ambil baseURL
-const CART_KEY = "bp_cart";
+const CART_KEY = "nelofy_cart";
 
 // ── Global product cache (diisi setelah fetch) ──
 let allProducts = [];

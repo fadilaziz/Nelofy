@@ -1,5 +1,5 @@
 //Ambol Base URL di localstorage
-const BASE_URL = localStorage.getItem('BASE_URL_API');
+const BASE_URL = localStorage.getItem('base_url_api');
 
 // Toggle password visibility
 function togglePassword() {

@@ -13,7 +13,7 @@
   } catch (e) {}
 })();
 
-const CART_KEY = 'bp_cart';
+const CART_KEY = 'nelofy_cart';
 let subtotal = 0;
 let finalGrandTotal = 0;
 
@@ -236,7 +236,6 @@ function register() {
     });
 }
 
-
 //login
 function login() {
   const email = document.getElementById('login-email').value;
@@ -277,14 +276,16 @@ function login() {
     .then((data) => {
       if (data.code === 200) {
         showNotification('Login Berhasil', (type = 'success'));
-        window.location.reload();
-        // loadCustomerData();
         //Simpan data user ke local storage
         localStorage.setItem('bp_username', JSON.stringify(data.user));
 
         //Mengembalikan Nilai button
         btnLogin.innerHTML = 'Masuk';
         btnLogin.disabled = false;
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       } else {
         showNotification(data.message, 'error');
         //Mengembalikan Nilai button
@@ -550,7 +551,7 @@ function checkoutToPayment() {
   const expiry = new Date(now.getTime() + 24 * 60 * 60 * 1000);
 
   // const userInfo = JSON.parse(localStorage.getItem("bp_user_info"));
-  const productCart = JSON.parse(localStorage.getItem('bp_cart'));
+  const productCart = JSON.parse(localStorage.getItem(CART_KEY));
   const [{ id, name, price, qty }] = productCart;
 
   //Ambil kode Voucher
@@ -601,6 +602,9 @@ function checkoutToPayment() {
           });
           localStorage.setItem('bp_notifications', JSON.stringify(pendingNotifs));
         }
+
+        // Hapus cart setelah checkout berhasil
+        localStorage.removeItem('nelofy_cart');
 
         //Mengembalikan Nilai button
         btn.innerHTML = 'Bayar Sekarang';

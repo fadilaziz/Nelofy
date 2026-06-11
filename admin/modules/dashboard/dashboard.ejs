@@ -577,91 +577,6 @@
                 <span class="check-icon" style="display: none; font-size: 12px">✓</span>
               </div>
             </div>
-
-            <!-- Dropdown Filter Pengguna -->
-            <div
-              id="user-filter-dropdown"
-              style="
-                display: none;
-                position: absolute;
-                top: calc(100% + 8px);
-                right: 0;
-                background: var(--white);
-                border: 1px solid var(--gray-200);
-                border-radius: 8px;
-                padding: 6px 0;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                z-index: 100;
-                min-width: 140px;
-              "
-            >
-              <div
-                style="
-                  font-size: 11px;
-                  font-weight: 700;
-                  text-transform: uppercase;
-                  color: var(--gray-400);
-                  padding: 4px 16px 8px 16px;
-                  letter-spacing: 0.5px;
-                "
-              >
-                Status Pengguna
-              </div>
-              <div
-                class="user-filter-option active"
-                data-value="all"
-                style="
-                  padding: 8px 16px;
-                  font-size: 13px;
-                  cursor: pointer;
-                  color: var(--black);
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                "
-                onmouseover="this.style.background = 'var(--gray-50)'"
-                onmouseout="this.style.background = 'transparent'"
-              >
-                Semua
-                <span class="check-icon" style="font-size: 12px">✓</span>
-              </div>
-              <div
-                class="user-filter-option"
-                data-value="active"
-                style="
-                  padding: 8px 16px;
-                  font-size: 13px;
-                  cursor: pointer;
-                  color: var(--gray-500);
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                "
-                onmouseover="this.style.background = 'var(--gray-50)'"
-                onmouseout="this.style.background = 'transparent'"
-              >
-                Aktif
-                <span class="check-icon" style="display: none; font-size: 12px">✓</span>
-              </div>
-              <div
-                class="user-filter-option"
-                data-value="inactive"
-                style="
-                  padding: 8px 16px;
-                  font-size: 13px;
-                  cursor: pointer;
-                  color: var(--gray-500);
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                "
-                onmouseover="this.style.background = 'var(--gray-50)'"
-                onmouseout="this.style.background = 'transparent'"
-              >
-                Nonaktif
-                <span class="check-icon" style="display: none; font-size: 12px">✓</span>
-              </div>
-            </div>
           </div>
 
           <!-- ADD BUTTON -->
@@ -774,6 +689,59 @@
           </ul>
         </div>
 
+        <!-- User Filters (Active on user tab) -->
+        <div class="sidebar-block filter-group" id="filter-user-role" style="display: none">
+          <h4 class="sidebar-title sidebar-title-custom">Filter Role</h4>
+          <label class="sidebar-check">
+            <input
+              type="radio"
+              name="user-role-filter"
+              class="user-filter-radio"
+              value="all"
+              checked
+            />
+            Semua
+          </label>
+          <label class="sidebar-check">
+            <input type="radio" name="user-role-filter" class="user-filter-radio" value="admin" />
+            Admin
+          </label>
+          <label class="sidebar-check">
+            <input type="radio" name="user-role-filter" class="user-filter-radio" value="user" />
+            User
+          </label>
+        </div>
+        <div class="sidebar-block filter-group" id="filter-user-status" style="display: none">
+          <h4 class="sidebar-title sidebar-title-custom">Filter Status</h4>
+          <label class="sidebar-check">
+            <input
+              type="radio"
+              name="user-status-filter"
+              class="user-filter-radio"
+              value="all"
+              checked
+            />
+            Semua
+          </label>
+          <label class="sidebar-check">
+            <input
+              type="radio"
+              name="user-status-filter"
+              class="user-filter-radio"
+              value="active"
+            />
+            Aktif
+          </label>
+          <label class="sidebar-check">
+            <input
+              type="radio"
+              name="user-status-filter"
+              class="user-filter-radio"
+              value="inactive"
+            />
+            Nonaktif
+          </label>
+        </div>
       </aside>
       <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebarFilter()"></div>
 
@@ -784,7 +752,19 @@
           <div class="stat-grid">
             <div class="stat-card">
               <div class="stat-icon">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <svg
+                  viewBox="0 0 24 24"
+                  width="22"
+                  height="22"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
               </div>
               <div class="stat-info">
                 <h3>Total Pengguna</h3>
@@ -793,7 +773,20 @@
             </div>
             <div class="stat-card">
               <div class="stat-icon">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <svg
+                  viewBox="0 0 24 24"
+                  width="22"
+                  height="22"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <path d="M16 10a4 4 0 0 1-8 0"></path>
+                </svg>
               </div>
               <div class="stat-info">
                 <h3>Total Pesanan</h3>
@@ -802,7 +795,19 @@
             </div>
             <div class="stat-card">
               <div class="stat-icon">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                <svg
+                  viewBox="0 0 24 24"
+                  width="22"
+                  height="22"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="12" y1="1" x2="12" y2="23"></line>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
               </div>
               <div class="stat-info">
                 <h3>Total Pendapatan</h3>
@@ -821,8 +826,28 @@
             "
             class="stat-card"
           >
-            <div style="margin-bottom: 16px; color: var(--black); display: flex; justify-content: center;">
-              <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            <div
+              style="
+                margin-bottom: 16px;
+                color: var(--black);
+                display: flex;
+                justify-content: center;
+              "
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="48"
+                height="48"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
             </div>
             <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px">
               Selamat Datang di Panel Admin Nelofy
@@ -841,12 +866,12 @@
             <table class="admin-table custom-improved-table">
               <thead>
                 <tr>
-                  <th style="width: 50px;">No</th>
+                  <th style="width: 50px">No</th>
                   <th>Pengguna</th>
                   <th>Kontak</th>
                   <th>Role</th>
                   <th>Status</th>
-                  <th style="width: 130px; text-align: right;">Aksi</th>
+                  <th style="width: 130px; text-align: right">Aksi</th>
                 </tr>
               </thead>
               <tbody id="user-table-body">
@@ -878,7 +903,7 @@
                   <th>Produk</th>
                   <th>Total</th>
                   <th>Status</th>
-                  <th style="width: 130px; text-align: right;">Aksi</th>
+                  <th style="width: 130px; text-align: right">Aksi</th>
                 </tr>
               </thead>
               <tbody id="order-table-body">
@@ -901,14 +926,14 @@
     </div>
     <!-- /container -->
 
-    <!-- ─── FOOTER ─── -->
+    <!-- ─── FOOTER ───
     <footer class="footer">
       <div class="footer-container">
         <div class="footer-bottom" style="border-top: none; padding-top: 0">
           <p>&copy; 2026 Nelofy Admin Panel. Seluruh hak cipta dilindungi.</p>
         </div>
       </div>
-    </footer>
+    </footer> -->
 
     <!-- ─── USER ADD/EDIT MODAL ─── -->
     <div class="product-modal-overlay" id="user-modal-overlay" style="z-index: 10000">
