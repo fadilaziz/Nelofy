@@ -17,6 +17,7 @@ export const checkout_products = async (req, res) => {
     payload = await service.transaction(payload);
     //Menyimpan data queue whatsapp dan email
     payload = await service.checkout_send_queue(payload);
+    console.log('DEBUG: payload after queue:', payload);
 
     //Response
     return res.status(200).json({
